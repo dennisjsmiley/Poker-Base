@@ -6,34 +6,14 @@ import poker.base.enums.Rank;
 import poker.base.enums.Suit;
 import poker.base.exception.StraightFlushNotSameSuit;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class HandRankingFactory {
 
-    public HandRanking build(Hand hand) throws StraightFlushNotSameSuit {
-        Set<Suit> handSuits = new HashSet<>();
-        Map<Rank, Integer> rankCount = new HashMap<>();
+    boolean isRoyalFlush(Hand hand) {
+        if (hand.isSingleSuit()) {
+            Map<Rank, Integer> rankCount = hand.getRankCount();
 
-        for (Card card : hand.getCards()) {
-            handSuits.add(card.getSuit());
-
-            if (rankCount.containsKey(card.getRank())) {
-                rankCount.put(card.getRank(), 1 + rankCount.get(card.getRank()));
-            } else {
-                rankCount.put(card.getRank(), 1);
-            }
-        }
-
-        if (handSuits.size() == 1) {
-            Suit handSuit = null;
-            for (Suit suit : handSuits) {
-                handSuit = suit;
-            }
-
-            // check for royal flush
             Map<Rank, Integer> royalFlushRankCount = new HashMap<>();
             royalFlushRankCount.put(Rank.ACE, 1);
             royalFlushRankCount.put(Rank.KING, 1);
@@ -41,37 +21,30 @@ public class HandRankingFactory {
             royalFlushRankCount.put(Rank.JACK, 1);
             royalFlushRankCount.put(Rank.TEN, 1);
 
-            if (royalFlushRankCount.equals(rankCount)) {
-                return new RoyalFlush(handSuit);
-            }
+            return royalFlushRankCount.equals(rankCount);
+        }
+        return false;
+    }
 
-            // check for straight flush
-            Card minHandCard = null;
-            Card maxHandCard = null;
+    boolean isStraightFlush(Hand hand) {
+        if (hand.isSingleSuit()) {
+            Card lowHandCard = hand.getLowCard();
+            Card highHandCard = hand.getHighCard();
 
-            for (Card card : hand.getCards()) {
+            return !isRoyalFlush(hand) && lowHandCard.getRank().getRankIntegerValue() + 4 == highHandCard.getRank().getRankIntegerValue();
+        }
+        return false;
+    }
 
-                if (minHandCard == null) {
-                    minHandCard = card;
-                } else {
-                    if (card.getRank().getRankIntegerValue() < minHandCard.getRank().getRankIntegerValue()) {
-                        minHandCard = card;
-                    }
-                }
+    public HandRanking build(Hand hand) throws StraightFlushNotSameSuit {
 
-                if (maxHandCard == null) {
-                    maxHandCard = card;
-                } else {
-                    if (card.getRank().getRankIntegerValue() > maxHandCard.getRank().getRankIntegerValue()) {
-                        maxHandCard = card;
-                    }
-                }
+        if (isRoyalFlush(hand)) {
+            Optional<Suit> optionalSuit = hand.getSingleSuit();
+            return new RoyalFlush(optionalSuit.get());
+        }
 
-            }
-
-            if (minHandCard.getRank().getRankIntegerValue() + 4 == maxHandCard.getRank().getRankIntegerValue()) {
-                return new StraightFlush(minHandCard, maxHandCard);
-            }
+        if (isStraightFlush(hand)) {
+            return new StraightFlush(hand.getLowCard(), hand.getHighCard());
         }
 
         // other hand rankings not yet handled
