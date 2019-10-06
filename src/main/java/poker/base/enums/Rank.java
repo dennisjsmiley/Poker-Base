@@ -11,10 +11,10 @@ public enum Rank {
     EIGHT("Eight", 8),
     NINE("Nine", 9),
     TEN("Ten", 10),
-    JACK("Jack", null),
-    QUEEN("Queen", null),
-    KING("King", null),
-    ACE("Ace", null);
+    JACK("Jack", 11),
+    QUEEN("Queen", 12),
+    KING("King", 13),
+    ACE("Ace", 14);
 
     private String rankStringValue;
     private Integer rankIntegerValue;
