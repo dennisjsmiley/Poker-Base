@@ -109,6 +109,8 @@ public class HandRankingFactoryTest {
         assertFalse(handRankingFactory.build(hand) instanceof StraightFlush);
     }
 
+    // Four of a Kind
+
     @Test
     public void testHandRankingFactory_FourOfAKind_Jacks() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
         Set<Card> cards = new HashSet<>();
