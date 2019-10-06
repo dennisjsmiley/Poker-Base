@@ -87,4 +87,13 @@ public class Hand {
         }
         return Optional.empty();
     }
+
+    public Optional<Rank> getFourOfAKindRank() {
+        for (Map.Entry<Rank, Integer> rankCountEntry : getRankCount().entrySet()) {
+            if (rankCountEntry.getValue() == 4) {
+                return Optional.of(rankCountEntry.getKey());
+            }
+        }
+        return Optional.empty();
+    }
 }

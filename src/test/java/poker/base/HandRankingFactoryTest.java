@@ -6,10 +6,7 @@ import poker.base.enums.Suit;
 import poker.base.exception.NotAFullHandException;
 import poker.base.exception.NullHandException;
 import poker.base.exception.StraightFlushNotSameSuit;
-import poker.base.handRanking.HandRanking;
-import poker.base.handRanking.HandRankingFactory;
-import poker.base.handRanking.RoyalFlush;
-import poker.base.handRanking.StraightFlush;
+import poker.base.handRanking.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -110,5 +107,23 @@ public class HandRankingFactoryTest {
         Hand hand = new Hand(cards);
 
         assertFalse(handRankingFactory.build(hand) instanceof StraightFlush);
+    }
+
+    @Test
+    public void testHandRankingFactory_FourOfAKind_Jacks() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.HEARTS, Rank.JACK));
+        cards.add(new Card(Suit.DIAMONDS, Rank.JACK));
+        cards.add(new Card(Suit.SPADES, Rank.JACK));
+        cards.add(new Card(Suit.CLUBS, Rank.JACK));
+        cards.add(new Card(Suit.SPADES, Rank.ACE));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = handRankingFactory.build(hand);
+        assertTrue(handRanking instanceof FourOfAKind);
+
+        FourOfAKind fourOfAKind = (FourOfAKind) handRanking;
+        assertEquals(Rank.JACK, fourOfAKind.getRank());
     }
 }

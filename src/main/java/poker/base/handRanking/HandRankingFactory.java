@@ -36,6 +36,11 @@ public class HandRankingFactory {
         return false;
     }
 
+    boolean isFourOfAKind(Hand hand) {
+        Optional<Rank> fourOfAKindRank = hand.getFourOfAKindRank();
+        return fourOfAKindRank.isPresent();
+    }
+
     public HandRanking build(Hand hand) throws StraightFlushNotSameSuit {
 
         if (isRoyalFlush(hand)) {
@@ -45,6 +50,10 @@ public class HandRankingFactory {
 
         if (isStraightFlush(hand)) {
             return new StraightFlush(hand.getLowCard(), hand.getHighCard());
+        }
+
+        if (isFourOfAKind(hand)) {
+            return new FourOfAKind(hand.getFourOfAKindRank().get());
         }
 
         // other hand rankings not yet handled
