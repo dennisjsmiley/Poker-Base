@@ -1,6 +1,8 @@
-package poker.base;
+package poker.base.handRanking;
 
 import org.junit.Test;
+import poker.base.Card;
+import poker.base.Hand;
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
 import poker.base.exception.NotAFullHandException;
