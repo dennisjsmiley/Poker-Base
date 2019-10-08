@@ -5,8 +5,8 @@ import poker.base.exception.StraightFlushNotSameSuit;
 
 public class StraightFlush extends HandRanking {
 
-    private Card lowCard;
-    private Card highCard;
+    private final Card lowCard;
+    private final Card highCard;
 
     public StraightFlush(Card lowCard, Card highCard) throws StraightFlushNotSameSuit {
         if (!lowCard.getSuit().equals(highCard.getSuit())) {

@@ -4,7 +4,7 @@ import poker.base.enums.Suit;
 
 public class RoyalFlush extends HandRanking {
 
-    private Suit suit;
+    private final Suit suit;
 
     public RoyalFlush(Suit suit) {
         this.suit = suit;

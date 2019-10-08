@@ -4,7 +4,7 @@ import poker.base.enums.Rank;
 
 public class FourOfAKind extends HandRanking {
 
-    private Rank rank;
+    private final Rank rank;
 
     public FourOfAKind(Rank rank) {
         this.rank = rank;
