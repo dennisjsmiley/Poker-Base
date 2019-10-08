@@ -26,4 +26,9 @@ public enum Suit {
         }
         return Optional.empty();
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

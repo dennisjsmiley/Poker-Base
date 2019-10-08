@@ -31,4 +31,9 @@ public enum Rank {
     public Integer getRankIntegerValue() {
         return rankIntegerValue;
     }
+
+    @Override
+    public String toString() {
+        return rankStringValue;
+    }
 }

@@ -15,12 +15,6 @@ public class Hand {
             throw new NullHandException();
         }
 
-        if (cards.size() != 5) {
-            throw new NotAFullHandException();
-        }
-
-        // todo: check no duplicate cards in the hand 
-
         this.cards = Collections.unmodifiableSet(cards);
     }
 
