@@ -163,4 +163,12 @@ public class Hand {
         Optional<Rank> twoOfAKindRank = getTwoOfAKindRank();
         return threeOfAKindRank.isPresent() && twoOfAKindRank.isPresent();
     }
+
+    public boolean isFlush() {
+        if (!isFullHand()) {
+            return false;
+        }
+
+        return isSingleSuit() && getLowCard().getRank().toInteger() + 4 != getHighCard().getRank().toInteger();
+    }
 }

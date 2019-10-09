@@ -151,4 +151,39 @@ public class HandRankingFactoryTest {
         assertEquals(Rank.TEN, fullHouse.getThreeOfAKindRank());
         assertEquals(Rank.FIVE, fullHouse.getTwoOfAKindRank());
     }
+
+    // Flush
+
+    @Test
+    public void testHandRankingFactory_Flush() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.SPADES, Rank.TWO));
+        cards.add(new Card(Suit.SPADES, Rank.FOUR));
+        cards.add(new Card(Suit.SPADES, Rank.SIX));
+        cards.add(new Card(Suit.SPADES, Rank.EIGHT));
+        cards.add(new Card(Suit.SPADES, Rank.ACE));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = handRankingFactory.build(hand);
+        assertTrue(handRanking instanceof Flush);
+
+        Flush flush = (Flush) handRanking;
+        assertEquals(Suit.SPADES, flush.getSuit());
+    }
+
+    @Test
+    public void testHandRankingFactory_WouldBeFlush() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.SPADES, Rank.TWO));
+        cards.add(new Card(Suit.SPADES, Rank.THREE));
+        cards.add(new Card(Suit.SPADES, Rank.FOUR));
+        cards.add(new Card(Suit.SPADES, Rank.FIVE));
+        cards.add(new Card(Suit.SPADES, Rank.SIX));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = handRankingFactory.build(hand);
+        assertTrue(handRanking instanceof StraightFlush);
+    }
 }

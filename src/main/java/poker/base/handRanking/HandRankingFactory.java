@@ -33,6 +33,10 @@ public class HandRankingFactory {
             handRanking = new FullHouse(hand.getThreeOfAKindRank().get(), hand.getTwoOfAKindRank().get());
         }
 
+        if (hand.isFlush()) {
+            handRanking = new Flush(hand.getSingleSuit().get());
+        }
+
         // other hand rankings not yet handled
         return handRanking;
     }
