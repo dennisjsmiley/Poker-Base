@@ -29,6 +29,10 @@ public class HandRankingFactory {
             handRanking = new FourOfAKind(hand.getFourOfAKindRank().get());
         }
 
+        if (hand.isFullHouse()) {
+            handRanking = new FullHouse(hand.getThreeOfAKindRank().get(), hand.getTwoOfAKindRank().get());
+        }
+
         // other hand rankings not yet handled
         return handRanking;
     }

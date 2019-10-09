@@ -84,13 +84,25 @@ public class Hand {
         return Optional.empty();
     }
 
-    public Optional<Rank> getFourOfAKindRank() {
+    private Optional<Rank> getXOfAKindRank(int x) {
         for (Map.Entry<Rank, Integer> rankCountEntry : getRankCount().entrySet()) {
-            if (rankCountEntry.getValue() == 4) {
+            if (rankCountEntry.getValue() == x) {
                 return Optional.of(rankCountEntry.getKey());
             }
         }
         return Optional.empty();
+    }
+
+    public Optional<Rank> getFourOfAKindRank() {
+        return getXOfAKindRank(4);
+    }
+
+    public Optional<Rank> getThreeOfAKindRank() {
+        return getXOfAKindRank(3);
+    }
+
+    public Optional<Rank> getTwoOfAKindRank() {
+        return getXOfAKindRank(2);
     }
 
     public boolean isFullHand() {
@@ -140,5 +152,15 @@ public class Hand {
 
         Optional<Rank> fourOfAKindRank = getFourOfAKindRank();
         return fourOfAKindRank.isPresent();
+    }
+
+    public boolean isFullHouse() {
+        if (!isFullHand()) {
+            return false;
+        }
+
+        Optional<Rank> threeOfAKindRank = getThreeOfAKindRank();
+        Optional<Rank> twoOfAKindRank = getTwoOfAKindRank();
+        return threeOfAKindRank.isPresent() && twoOfAKindRank.isPresent();
     }
 }

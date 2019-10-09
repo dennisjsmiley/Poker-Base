@@ -130,4 +130,25 @@ public class HandRankingFactoryTest {
         FourOfAKind fourOfAKind = (FourOfAKind) handRanking;
         assertEquals(Rank.JACK, fourOfAKind.getRank());
     }
+
+    // Full House
+
+    @Test
+    public void testHandRankingFactory_FullHouse() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.HEARTS, Rank.TEN));
+        cards.add(new Card(Suit.DIAMONDS, Rank.TEN));
+        cards.add(new Card(Suit.CLUBS, Rank.TEN));
+        cards.add(new Card(Suit.SPADES, Rank.FIVE));
+        cards.add(new Card(Suit.CLUBS, Rank.FIVE));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = handRankingFactory.build(hand);
+        assertTrue(handRanking instanceof FullHouse);
+
+        FullHouse fullHouse = (FullHouse) handRanking;
+        assertEquals(Rank.TEN, fullHouse.getThreeOfAKindRank());
+        assertEquals(Rank.FIVE, fullHouse.getTwoOfAKindRank());
+    }
 }
