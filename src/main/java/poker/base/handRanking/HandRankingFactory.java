@@ -14,21 +14,23 @@ public class HandRankingFactory {
 
     public HandRanking build(Hand hand) throws StraightFlushNotSameSuit {
 
+        HandRanking handRanking = null;
+
         if (hand.isRoyalFlush()) {
             Optional<Suit> optionalSuit = hand.getSingleSuit();
-            return new RoyalFlush(optionalSuit.get());
+            handRanking = new RoyalFlush(optionalSuit.get());
         }
 
         if (hand.isStraightFlush()) {
-            return new StraightFlush(hand.getLowCard(), hand.getHighCard());
+            handRanking = new StraightFlush(hand.getLowCard(), hand.getHighCard());
         }
 
         if (hand.isFourOfAKind()) {
-            return new FourOfAKind(hand.getFourOfAKindRank().get());
+            handRanking = new FourOfAKind(hand.getFourOfAKindRank().get());
         }
 
         // other hand rankings not yet handled
-        return null;
+        return handRanking;
     }
 
 }
