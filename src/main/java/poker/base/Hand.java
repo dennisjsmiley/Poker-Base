@@ -93,9 +93,17 @@ public class Hand {
         return Optional.empty();
     }
 
+    public boolean isFullHand() {
+        return getCards().size() == 5;
+    }
+
     // Hand ranking tests
 
     public boolean isRoyalFlush() {
+        if (!isFullHand()) {
+            return false;
+        }
+
         if (isSingleSuit()) {
             Map<Rank, Integer> rankCount = getRankCount();
 
@@ -112,6 +120,10 @@ public class Hand {
     }
 
     public boolean isStraightFlush() {
+        if (!isFullHand()) {
+            return false;
+        }
+
         if (isSingleSuit()) {
             Card lowHandCard = getLowCard();
             Card highHandCard =getHighCard();
@@ -122,6 +134,10 @@ public class Hand {
     }
 
     public boolean isFourOfAKind() {
+        if (!isFullHand()) {
+            return false;
+        }
+
         Optional<Rank> fourOfAKindRank = getFourOfAKindRank();
         return fourOfAKindRank.isPresent();
     }
