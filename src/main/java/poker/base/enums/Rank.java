@@ -19,16 +19,12 @@ public enum Rank {
     private String rankStringValue;
     private Integer rankIntegerValue;
 
-    private Rank(String stringValue, Integer integerValue) {
+    Rank(String stringValue, Integer integerValue) {
         this.rankStringValue = stringValue;
         this.rankIntegerValue = integerValue;
     }
 
-    public String getRankStringValue() {
-        return rankStringValue;
-    }
-
-    public Integer getRankIntegerValue() {
+    public Integer toInteger() {
         return rankIntegerValue;
     }
 

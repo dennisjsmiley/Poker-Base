@@ -28,7 +28,7 @@ public class Hand {
             if (lowCard == null) {
                 lowCard = card;
             } else {
-                if (card.getRank().getRankIntegerValue() < lowCard.getRank().getRankIntegerValue()) {
+                if (card.getRank().toInteger() < lowCard.getRank().toInteger()) {
                     lowCard = card;
                 }
             }
@@ -42,7 +42,7 @@ public class Hand {
             if (highCard == null) {
                 highCard = card;
             } else {
-                if (card.getRank().getRankIntegerValue() > highCard.getRank().getRankIntegerValue()) {
+                if (card.getRank().toInteger() > highCard.getRank().toInteger()) {
                     highCard = card;
                 }
             }
@@ -116,7 +116,7 @@ public class Hand {
             Card lowHandCard = getLowCard();
             Card highHandCard =getHighCard();
 
-            return !isRoyalFlush() && lowHandCard.getRank().getRankIntegerValue() + 4 == highHandCard.getRank().getRankIntegerValue();
+            return !isRoyalFlush() && lowHandCard.getRank().toInteger() + 4 == highHandCard.getRank().toInteger();
         }
         return false;
     }
