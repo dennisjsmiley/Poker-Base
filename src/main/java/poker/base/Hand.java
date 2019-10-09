@@ -92,4 +92,37 @@ public class Hand {
         }
         return Optional.empty();
     }
+
+    // Hand ranking tests
+
+    public boolean isRoyalFlush() {
+        if (isSingleSuit()) {
+            Map<Rank, Integer> rankCount = getRankCount();
+
+            Map<Rank, Integer> royalFlushRankCount = new HashMap<>();
+            royalFlushRankCount.put(Rank.ACE, 1);
+            royalFlushRankCount.put(Rank.KING, 1);
+            royalFlushRankCount.put(Rank.QUEEN, 1);
+            royalFlushRankCount.put(Rank.JACK, 1);
+            royalFlushRankCount.put(Rank.TEN, 1);
+
+            return royalFlushRankCount.equals(rankCount);
+        }
+        return false;
+    }
+
+    public boolean isStraightFlush() {
+        if (isSingleSuit()) {
+            Card lowHandCard = getLowCard();
+            Card highHandCard =getHighCard();
+
+            return !isRoyalFlush() && lowHandCard.getRank().getRankIntegerValue() + 4 == highHandCard.getRank().getRankIntegerValue();
+        }
+        return false;
+    }
+
+    public boolean isFourOfAKind() {
+        Optional<Rank> fourOfAKindRank = getFourOfAKindRank();
+        return fourOfAKindRank.isPresent();
+    }
 }
