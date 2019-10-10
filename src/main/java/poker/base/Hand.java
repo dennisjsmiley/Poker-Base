@@ -2,7 +2,6 @@ package poker.base;
 
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
-import poker.base.exception.NotAFullHandException;
 import poker.base.exception.NullHandException;
 
 import java.util.*;
@@ -10,7 +9,7 @@ import java.util.*;
 public class Hand {
     private final Set<Card> cards;
 
-    public Hand(Set<Card> cards) throws NullHandException, NotAFullHandException {
+    public Hand(Set<Card> cards) throws NullHandException {
         if (cards == null) {
             throw new NullHandException();
         }
