@@ -19,14 +19,13 @@ import static org.junit.Assert.assertTrue;
 
 public class HandRankingFactoryTest {
 
-    HandRankingFactory handRankingFactory = new HandRankingFactory();
+    private HandRankingFactory handRankingFactory = new HandRankingFactory();
 
     // Royal Flush
 
     @Test
     public void testHandRankingFactory_RoyalFlush_Spades() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
         Set<Card> cards = new HashSet<>();
-
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.SPADES, Rank.KING));
         cards.add(new Card(Suit.SPADES, Rank.QUEEN));
@@ -45,7 +44,6 @@ public class HandRankingFactoryTest {
     @Test
     public void testHandRankingFactory_WouldBeRoyalFlush_SpadesAndDiamonds() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
         Set<Card> cards = new HashSet<>();
-
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.SPADES, Rank.KING));
         cards.add(new Card(Suit.SPADES, Rank.QUEEN));
@@ -62,7 +60,6 @@ public class HandRankingFactoryTest {
     @Test
     public void testHandRankingFactory_StraightFlush_Spades() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
         Set<Card> cards = new HashSet<>();
-
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
         cards.add(new Card(Suit.SPADES, Rank.EIGHT));
@@ -84,7 +81,6 @@ public class HandRankingFactoryTest {
     @Test
     public void testHandRankingFactory_WouldBeStraightFlush_Spades() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
         Set<Card> cards = new HashSet<>();
-
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
         cards.add(new Card(Suit.SPADES, Rank.EIGHT));
@@ -99,7 +95,6 @@ public class HandRankingFactoryTest {
     @Test
     public void testHandRankingFactory_WouldBeStraightFlush_SpadesAndDiamonds() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
         Set<Card> cards = new HashSet<>();
-
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
         cards.add(new Card(Suit.SPADES, Rank.EIGHT));
