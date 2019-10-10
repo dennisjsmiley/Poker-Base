@@ -171,4 +171,12 @@ public class Hand {
 
         return isSingleSuit() && getLowCard().getRank().toInteger() + 4 != getHighCard().getRank().toInteger();
     }
+
+    public boolean isStraight() {
+        if (!isFullHand()) {
+            return false;
+        }
+
+        return !isSingleSuit() && getLowCard().getRank().toInteger() + 4 == getHighCard().getRank().toInteger();
+    }
 }

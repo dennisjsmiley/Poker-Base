@@ -37,6 +37,10 @@ public class HandRankingFactory {
             handRanking = new Flush(hand.getSingleSuit().get());
         }
 
+        if (hand.isStraight()) {
+            handRanking = new Straight(hand.getLowCard().getRank(), hand.getHighCard().getRank());
+        }
+
         // other hand rankings not yet handled
         return handRanking;
     }
