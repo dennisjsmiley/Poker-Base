@@ -41,6 +41,10 @@ public class HandRankingFactory {
             handRanking = new Straight(hand.getLowCard().getRank(), hand.getHighCard().getRank());
         }
 
+        if (hand.isThreeOfAKind()) {
+            handRanking = new ThreeOfAKind(hand.getThreeOfAKindRank().get());
+        }
+
         // other hand rankings not yet handled
         return handRanking;
     }

@@ -179,4 +179,12 @@ public class Hand {
 
         return !isSingleSuit() && getLowCard().getRank().toInteger() + 4 == getHighCard().getRank().toInteger();
     }
+
+    public boolean isThreeOfAKind() {
+        if (!isFullHand()) {
+            return false;
+        }
+
+        return getThreeOfAKindRank().isPresent() && !getTwoOfAKindRank().isPresent();
+    }
 }

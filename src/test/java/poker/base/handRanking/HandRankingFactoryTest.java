@@ -223,5 +223,38 @@ public class HandRankingFactoryTest {
         assertFalse(handRanking instanceof Straight);
     }
 
+    // Three of a Kind
 
+    @Test
+    public void testHandRankingFactory_ThreeOfAKind() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.SPADES, Rank.ACE));
+        cards.add(new Card(Suit.CLUBS, Rank.ACE));
+        cards.add(new Card(Suit.DIAMONDS, Rank.ACE));
+        cards.add(new Card(Suit.HEARTS, Rank.THREE));
+        cards.add(new Card(Suit.CLUBS, Rank.KING));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = handRankingFactory.build(hand);
+        assertTrue(handRanking instanceof ThreeOfAKind);
+
+        ThreeOfAKind threeOfAKind = (ThreeOfAKind) handRanking;
+        assertEquals(Rank.ACE, threeOfAKind.getRank());
+    }
+
+    @Test
+    public void testHandRankingFactory_NotThreeOfAKindButFullHouse() throws NullHandException, NotAFullHandException, StraightFlushNotSameSuit {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.SPADES, Rank.ACE));
+        cards.add(new Card(Suit.CLUBS, Rank.ACE));
+        cards.add(new Card(Suit.DIAMONDS, Rank.ACE));
+        cards.add(new Card(Suit.HEARTS, Rank.KING));
+        cards.add(new Card(Suit.CLUBS, Rank.KING));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = handRankingFactory.build(hand);
+        assertTrue(handRanking instanceof FullHouse);
+    }
 }
