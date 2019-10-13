@@ -247,4 +247,27 @@ public class HandTest {
         HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof FullHouse);
     }
+
+    // Two Pair
+
+    @Test
+    public void testHand_GetHandRanking_TwoPair() {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.CLUBS, Rank.KING));
+        cards.add(new Card(Suit.HEARTS, Rank.KING));
+        cards.add(new Card(Suit.SPADES, Rank.ACE));
+        cards.add(new Card(Suit.DIAMONDS, Rank.ACE));
+        cards.add(new Card(Suit.CLUBS, Rank.THREE));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = hand.getHandRanking();
+        assertTrue(handRanking instanceof TwoPair);
+
+        TwoPair twoPair = (TwoPair) handRanking;
+        Set<Rank> ranks = new HashSet<>();
+        ranks.add(Rank.KING);
+        ranks.add(Rank.ACE);
+        assertEquals(ranks, twoPair.getRanks());
+    }
 }

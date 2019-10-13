@@ -91,7 +91,7 @@ public class Hand {
                 ranks.add(rankCountEntry.getKey());
             }
         }
-        return ranks;
+        return Collections.unmodifiableList(ranks);
     }
 
     public Optional<Rank> getFourOfAKindRank() {
@@ -189,6 +189,10 @@ public class Hand {
         return getThreeOfAKindRank().isPresent() && getTwoOfAKindRank().isEmpty();
     }
 
+    public boolean isTwoPair() {
+        return isFullHand() && getTwoOfAKindRank().size() == 2;
+    }
+
     public HandRanking getHandRanking() {
         HandRanking handRanking = null;
 
@@ -206,6 +210,8 @@ public class Hand {
             handRanking = new Straight(this);
         } else if (isThreeOfAKind()) {
             handRanking = new ThreeOfAKind(this);
+        } else if (isTwoPair()) {
+            handRanking = new TwoPair(this);
         }
 
         // other hand rankings not yet handled
