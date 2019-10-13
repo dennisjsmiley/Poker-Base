@@ -2,7 +2,6 @@ package poker.base;
 
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
-import poker.base.exception.NullHandException;
 import poker.base.handRanking.*;
 
 import java.util.*;
