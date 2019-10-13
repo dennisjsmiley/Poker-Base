@@ -148,44 +148,23 @@ public class Hand {
     }
 
     public boolean isFourOfAKind() {
-        if (!isFullHand()) {
-            return false;
-        }
-
-        Optional<Rank> fourOfAKindRank = getFourOfAKindRank();
-        return fourOfAKindRank.isPresent();
+        return isFullHand() && getFourOfAKindRank().isPresent();
     }
 
     public boolean isFullHouse() {
-        if (!isFullHand()) {
-            return false;
-        }
-
-        return getThreeOfAKindRank().isPresent() && getTwoOfAKindRank().size() == 1;
+        return isFullHand() && getThreeOfAKindRank().isPresent() && getTwoOfAKindRank().size() == 1;
     }
 
     public boolean isFlush() {
-        if (!isFullHand()) {
-            return false;
-        }
-
-        return isSingleSuit() && getLowCard().getRank().toInteger() + 4 != getHighCard().getRank().toInteger();
+        return isFullHand() && isSingleSuit() && getLowCard().getRank().toInteger() + 4 != getHighCard().getRank().toInteger();
     }
 
     public boolean isStraight() {
-        if (!isFullHand()) {
-            return false;
-        }
-
-        return !isSingleSuit() && getLowCard().getRank().toInteger() + 4 == getHighCard().getRank().toInteger();
+        return isFullHand() && !isSingleSuit() && getLowCard().getRank().toInteger() + 4 == getHighCard().getRank().toInteger();
     }
 
     public boolean isThreeOfAKind() {
-        if (!isFullHand()) {
-            return false;
-        }
-
-        return getThreeOfAKindRank().isPresent() && getTwoOfAKindRank().isEmpty();
+        return isFullHand() && getThreeOfAKindRank().isPresent() && getTwoOfAKindRank().isEmpty();
     }
 
     public boolean isTwoPair() {
