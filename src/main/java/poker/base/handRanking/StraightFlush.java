@@ -10,11 +10,11 @@ public class StraightFlush extends HandRanking {
     }
 
     public Card getLowCard() {
-        return hand.getLowCard();
+        return getHand().getLowCard();
     }
 
     public Card getHighCard() {
-        return hand.getHighCard();
+        return getHand().getHighCard();
     }
 
     @Override

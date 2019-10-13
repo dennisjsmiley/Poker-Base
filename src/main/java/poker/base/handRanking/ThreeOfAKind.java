@@ -10,7 +10,7 @@ public class ThreeOfAKind extends HandRanking {
     }
 
     public Rank getRank() {
-        return hand.getThreeOfAKindRank().get();
+        return getHand().getThreeOfAKindRank().get();
     }
 
     @Override

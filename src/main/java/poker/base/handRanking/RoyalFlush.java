@@ -10,7 +10,7 @@ public class RoyalFlush extends HandRanking {
     }
 
     public Suit getSuit() {
-        return hand.getSingleSuit().get();
+        return getHand().getSingleSuit().get();
     }
 
     @Override

@@ -15,7 +15,7 @@ public class TwoPair extends HandRanking {
 
     public Set<Rank> getRanks() {
         Set<Rank> ranks = new HashSet<>();
-        ranks.addAll(hand.getTwoOfAKindRank());
+        ranks.addAll(getHand().getTwoOfAKindRank());
         return Collections.unmodifiableSet(ranks);
     }
 

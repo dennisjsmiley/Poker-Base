@@ -10,7 +10,7 @@ public class FourOfAKind extends HandRanking {
     }
 
     public Rank getRank() {
-        return hand.getFourOfAKindRank().get();
+        return getHand().getFourOfAKindRank().get();
     }
 
     @Override

@@ -10,11 +10,11 @@ public class FullHouse extends HandRanking {
     }
 
     public Rank getThreeOfAKindRank() {
-        return hand.getThreeOfAKindRank().get();
+        return getHand().getThreeOfAKindRank().get();
     }
 
     public Rank getTwoOfAKindRank() {
-        return hand.getTwoOfAKindRank().get(0);
+        return getHand().getTwoOfAKindRank().get(0);
     }
 
     @Override

@@ -10,7 +10,7 @@ public class HighCard extends HandRanking {
     }
 
     public Rank getRank() {
-        return hand.getHighCard().getRank();
+        return getHand().getHighCard().getRank();
     }
 
     @Override

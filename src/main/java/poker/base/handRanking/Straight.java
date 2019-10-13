@@ -10,11 +10,11 @@ public class Straight extends HandRanking {
     }
 
     public Rank getLowRank() {
-        return hand.getLowCard().getRank();
+        return getHand().getLowCard().getRank();
     }
 
     public Rank getHighRank() {
-        return hand.getHighCard().getRank();
+        return getHand().getHighCard().getRank();
     }
 
     @Override

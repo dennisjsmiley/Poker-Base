@@ -3,7 +3,7 @@ package poker.base.handRanking;
 import poker.base.Hand;
 
 public abstract class HandRanking implements Comparable<HandRanking> {
-    protected final Hand hand;
+    private final Hand hand;
 
     public HandRanking(Hand hand) {
         this.hand = hand;
