@@ -218,9 +218,10 @@ public class Hand {
             handRanking = new TwoPair(this);
         } else if (isPair()) {
             handRanking = new Pair(this);
+        } else {
+            handRanking = new HighCard(this);
         }
 
-        // other hand rankings not yet handled
         return handRanking;
     }
 }
