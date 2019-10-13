@@ -270,4 +270,24 @@ public class HandTest {
         ranks.add(Rank.ACE);
         assertEquals(ranks, twoPair.getRanks());
     }
+
+    // Pair
+
+    @Test
+    public void testHand_GetHandRanking_Pair() {
+        Set<Card> cards = new HashSet<>();
+        cards.add(new Card(Suit.SPADES, Rank.ACE));
+        cards.add(new Card(Suit.DIAMONDS, Rank.ACE));
+        cards.add(new Card(Suit.CLUBS, Rank.THREE));
+        cards.add(new Card(Suit.CLUBS, Rank.FOUR));
+        cards.add(new Card(Suit.HEARTS, Rank.FIVE));
+
+        Hand hand = new Hand(cards);
+
+        HandRanking handRanking = hand.getHandRanking();
+        assertTrue(handRanking instanceof Pair);
+
+        Pair pair = (Pair) handRanking;
+        assertEquals(Rank.ACE, pair.getRank());
+    }
 }

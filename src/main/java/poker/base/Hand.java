@@ -193,6 +193,10 @@ public class Hand {
         return isFullHand() && getTwoOfAKindRank().size() == 2;
     }
 
+    public boolean isPair() {
+        return isFullHand() && getTwoOfAKindRank().size() == 1 && !getThreeOfAKindRank().isPresent();
+    }
+
     public HandRanking getHandRanking() {
         HandRanking handRanking = null;
 
@@ -212,6 +216,8 @@ public class Hand {
             handRanking = new ThreeOfAKind(this);
         } else if (isTwoPair()) {
             handRanking = new TwoPair(this);
+        } else if (isPair()) {
+            handRanking = new Pair(this);
         }
 
         // other hand rankings not yet handled
