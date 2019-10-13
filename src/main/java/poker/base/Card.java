@@ -5,6 +5,7 @@ import poker.base.enums.Suit;
 
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Card {
     private final Suit suit;
@@ -45,5 +46,24 @@ public class Card {
     @Override
     public String toString() {
         return rank.toString() + " of " + suit.toString();
+    }
+
+    public static Optional<Card> fromShortCode(String string) {
+        string = string.toLowerCase();
+        String rankCode = string.substring(0, string.length() - 1);
+        String suitCode = string.substring(string.length() - 1);
+
+        Optional<Rank> optionalRank = Rank.fromShortCode(rankCode);
+        Optional<Suit> optionalSuit = Suit.fromShortCode(suitCode);
+
+        if (optionalRank.isPresent() && optionalSuit.isPresent()) {
+            return Optional.of(new Card(optionalSuit.get(), optionalRank.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public String toShortCode() {
+        return getRank().getShortCode() + getSuit().getShortCode();
     }
 }
