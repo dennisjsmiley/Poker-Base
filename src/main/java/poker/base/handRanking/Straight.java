@@ -1,21 +1,19 @@
 package poker.base.handRanking;
 
+import poker.base.Hand;
 import poker.base.enums.Rank;
 
 public class Straight extends HandRanking {
-    private final Rank lowRank;
-    private final Rank highRank;
 
-    public Straight(Rank lowRank, Rank highRank) {
-        this.lowRank = lowRank;
-        this.highRank = highRank;
+    public Straight(Hand hand) {
+        super(hand);
     }
 
     public Rank getLowRank() {
-        return lowRank;
+        return hand.getLowCard().getRank();
     }
 
     public Rank getHighRank() {
-        return highRank;
+        return hand.getHighCard().getRank();
     }
 }

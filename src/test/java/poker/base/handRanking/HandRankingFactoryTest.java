@@ -5,10 +5,6 @@ import poker.base.Card;
 import poker.base.Hand;
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
-import poker.base.exception.NotAFullHandException;
-import poker.base.exception.NullHandException;
-import poker.base.exception.StraightFlushNotSameSuit;
-import poker.base.handRanking.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +20,7 @@ public class HandRankingFactoryTest {
     // Royal Flush
 
     @Test
-    public void testHandRankingFactory_RoyalFlush_Spades() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_RoyalFlush_Spades() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.SPADES, Rank.KING));
@@ -42,7 +38,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeRoyalFlush_SpadesAndDiamonds() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_WouldBeRoyalFlush_SpadesAndDiamonds() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.SPADES, Rank.KING));
@@ -58,7 +54,7 @@ public class HandRankingFactoryTest {
     // Straight Flush
 
     @Test
-    public void testHandRankingFactory_StraightFlush_Spades() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_StraightFlush_Spades() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
@@ -79,7 +75,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeStraightFlush_Spades() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_WouldBeStraightFlush_Spades() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
@@ -93,7 +89,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeStraightFlush_SpadesAndDiamonds() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_WouldBeStraightFlush_SpadesAndDiamonds() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
@@ -109,7 +105,7 @@ public class HandRankingFactoryTest {
     // Four of a Kind
 
     @Test
-    public void testHandRankingFactory_FourOfAKind_Jacks() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_FourOfAKind_Jacks() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.HEARTS, Rank.JACK));
         cards.add(new Card(Suit.DIAMONDS, Rank.JACK));
@@ -129,7 +125,7 @@ public class HandRankingFactoryTest {
     // Full House
 
     @Test
-    public void testHandRankingFactory_FullHouse() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_FullHouse() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.HEARTS, Rank.TEN));
         cards.add(new Card(Suit.DIAMONDS, Rank.TEN));
@@ -150,7 +146,7 @@ public class HandRankingFactoryTest {
     // Flush
 
     @Test
-    public void testHandRankingFactory_Flush() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_Flush() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.SPADES, Rank.FOUR));
@@ -168,7 +164,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeFlush() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_WouldBeFlush() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.SPADES, Rank.THREE));
@@ -185,7 +181,7 @@ public class HandRankingFactoryTest {
     // Straight
 
     @Test
-    public void testHandRankingFactory_Straight() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_Straight() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.HEARTS, Rank.THREE));
@@ -204,7 +200,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_AlmostStraight() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_AlmostStraight() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.HEARTS, Rank.THREE));
@@ -221,7 +217,7 @@ public class HandRankingFactoryTest {
     // Three of a Kind
 
     @Test
-    public void testHandRankingFactory_ThreeOfAKind() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_ThreeOfAKind() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.CLUBS, Rank.ACE));
@@ -239,7 +235,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_NotThreeOfAKindButFullHouse() throws StraightFlushNotSameSuit {
+    public void testHandRankingFactory_NotThreeOfAKindButFullHouse() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.CLUBS, Rank.ACE));

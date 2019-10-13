@@ -1,16 +1,15 @@
 package poker.base.handRanking;
 
+import poker.base.Hand;
 import poker.base.enums.Rank;
 
 public class FourOfAKind extends HandRanking {
 
-    private final Rank rank;
-
-    public FourOfAKind(Rank rank) {
-        this.rank = rank;
+    public FourOfAKind(Hand hand) {
+        super(hand);
     }
 
     public Rank getRank() {
-        return rank;
+        return hand.getFourOfAKindRank().get();
     }
 }

@@ -1,21 +1,19 @@
 package poker.base.handRanking;
 
+import poker.base.Hand;
 import poker.base.enums.Rank;
 
 public class FullHouse extends HandRanking {
-    private final Rank threeOfAKindRank;
-    private final Rank twoOfAKindRank;
 
-    public FullHouse(Rank threeOfAKindRank, Rank twoOfAKindRank) {
-        this.threeOfAKindRank = threeOfAKindRank;
-        this.twoOfAKindRank = twoOfAKindRank;
+    public FullHouse(Hand hand) {
+        super(hand);
     }
 
     public Rank getThreeOfAKindRank() {
-        return threeOfAKindRank;
+        return hand.getThreeOfAKindRank().get();
     }
 
     public Rank getTwoOfAKindRank() {
-        return twoOfAKindRank;
+        return hand.getTwoOfAKindRank().get();
     }
 }

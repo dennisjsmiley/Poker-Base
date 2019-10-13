@@ -1,16 +1,15 @@
 package poker.base.handRanking;
 
+import poker.base.Hand;
 import poker.base.enums.Suit;
 
 public class RoyalFlush extends HandRanking {
 
-    private final Suit suit;
-
-    public RoyalFlush(Suit suit) {
-        this.suit = suit;
+    public RoyalFlush(Hand hand) {
+        super(hand);
     }
 
     public Suit getSuit() {
-        return suit;
+        return hand.getSingleSuit().get();
     }
 }

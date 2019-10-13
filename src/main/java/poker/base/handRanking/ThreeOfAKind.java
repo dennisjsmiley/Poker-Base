@@ -1,15 +1,15 @@
 package poker.base.handRanking;
 
+import poker.base.Hand;
 import poker.base.enums.Rank;
 
 public class ThreeOfAKind extends HandRanking {
-    private final Rank rank;
 
-    public ThreeOfAKind(Rank rank) {
-        this.rank = rank;
+    public ThreeOfAKind(Hand hand) {
+        super(hand);
     }
 
     public Rank getRank() {
-        return rank;
+        return hand.getThreeOfAKindRank().get();
     }
 }
