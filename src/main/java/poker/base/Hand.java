@@ -84,24 +84,27 @@ public class Hand {
         return Optional.empty();
     }
 
-    private Optional<Rank> getXOfAKindRank(int x) {
+    private List<Rank> getXOfAKindRank(int x) {
+        List<Rank> ranks = new ArrayList<>();
         for (Map.Entry<Rank, Integer> rankCountEntry : getRankCount().entrySet()) {
             if (rankCountEntry.getValue() == x) {
-                return Optional.of(rankCountEntry.getKey());
+                ranks.add(rankCountEntry.getKey());
             }
         }
-        return Optional.empty();
+        return ranks;
     }
 
     public Optional<Rank> getFourOfAKindRank() {
-        return getXOfAKindRank(4);
+        List<Rank> ranks = getXOfAKindRank(4);
+        return ranks.isEmpty() ? Optional.empty() : Optional.of(ranks.get(0));
     }
 
     public Optional<Rank> getThreeOfAKindRank() {
-        return getXOfAKindRank(3);
+        List<Rank> ranks = getXOfAKindRank(3);
+        return ranks.isEmpty() ? Optional.empty() : Optional.of(ranks.get(0));
     }
 
-    public Optional<Rank> getTwoOfAKindRank() {
+    public List<Rank> getTwoOfAKindRank() {
         return getXOfAKindRank(2);
     }
 
@@ -159,9 +162,7 @@ public class Hand {
             return false;
         }
 
-        Optional<Rank> threeOfAKindRank = getThreeOfAKindRank();
-        Optional<Rank> twoOfAKindRank = getTwoOfAKindRank();
-        return threeOfAKindRank.isPresent() && twoOfAKindRank.isPresent();
+        return getThreeOfAKindRank().isPresent() && getTwoOfAKindRank().size() == 1;
     }
 
     public boolean isFlush() {
@@ -185,7 +186,7 @@ public class Hand {
             return false;
         }
 
-        return getThreeOfAKindRank().isPresent() && !getTwoOfAKindRank().isPresent();
+        return getThreeOfAKindRank().isPresent() && getTwoOfAKindRank().isEmpty();
     }
 
     public HandRanking getHandRanking() {

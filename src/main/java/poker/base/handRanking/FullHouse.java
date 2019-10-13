@@ -14,6 +14,6 @@ public class FullHouse extends HandRanking {
     }
 
     public Rank getTwoOfAKindRank() {
-        return hand.getTwoOfAKindRank().get();
+        return hand.getTwoOfAKindRank().get(0);
     }
 }
