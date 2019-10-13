@@ -18,4 +18,9 @@ public class TwoPair extends HandRanking {
         ranks.addAll(hand.getTwoOfAKindRank());
         return Collections.unmodifiableSet(ranks);
     }
+
+    @Override
+    public poker.base.enums.HandRanking asEnum() {
+        return poker.base.enums.HandRanking.TWO_PAIR;
+    }
 }

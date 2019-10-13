@@ -12,4 +12,9 @@ public class Flush extends HandRanking {
     public Suit getSuit() {
         return hand.getSingleSuit().get();
     }
+
+    @Override
+    public poker.base.enums.HandRanking asEnum() {
+        return poker.base.enums.HandRanking.FLUSH;
+    }
 }

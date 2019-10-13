@@ -12,4 +12,9 @@ public class Pair extends HandRanking {
     public Rank getRank() {
         return hand.getTwoOfAKindRank().get(0);
     }
+
+    @Override
+    public poker.base.enums.HandRanking asEnum() {
+        return poker.base.enums.HandRanking.PAIR;
+    }
 }

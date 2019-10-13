@@ -12,4 +12,9 @@ public class FourOfAKind extends HandRanking {
     public Rank getRank() {
         return hand.getFourOfAKindRank().get();
     }
+
+    @Override
+    public poker.base.enums.HandRanking asEnum() {
+        return poker.base.enums.HandRanking.FOUR_OF_A_KIND;
+    }
 }

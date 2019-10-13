@@ -16,4 +16,9 @@ public class FullHouse extends HandRanking {
     public Rank getTwoOfAKindRank() {
         return hand.getTwoOfAKindRank().get(0);
     }
+
+    @Override
+    public poker.base.enums.HandRanking asEnum() {
+        return poker.base.enums.HandRanking.FULL_HOUSE;
+    }
 }
