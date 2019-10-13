@@ -17,4 +17,9 @@ public class ThreeOfAKind extends HandRanking {
     public poker.base.enums.HandRanking asEnum() {
         return poker.base.enums.HandRanking.THREE_OF_A_KIND;
     }
+
+    @Override
+    public String toString() {
+        return asEnum().toString() + " (" + getRank().toString() + ")";
+    }
 }

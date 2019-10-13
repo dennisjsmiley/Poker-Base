@@ -23,4 +23,9 @@ public class TwoPair extends HandRanking {
     public poker.base.enums.HandRanking asEnum() {
         return poker.base.enums.HandRanking.TWO_PAIR;
     }
+
+    @Override
+    public String toString() {
+        return asEnum().toString() + " (" + getRanks().toString() + ")";
+    }
 }

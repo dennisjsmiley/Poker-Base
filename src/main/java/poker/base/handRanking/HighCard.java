@@ -17,4 +17,9 @@ public class HighCard extends HandRanking {
     public poker.base.enums.HandRanking asEnum() {
         return poker.base.enums.HandRanking.HIGH_CARD;
     }
+
+    @Override
+    public String toString() {
+        return asEnum().toString() + " (" + getRank().toString() + ")";
+    }
 }

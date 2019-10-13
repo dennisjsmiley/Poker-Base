@@ -17,4 +17,9 @@ public class Flush extends HandRanking {
     public poker.base.enums.HandRanking asEnum() {
         return poker.base.enums.HandRanking.FLUSH;
     }
+
+    @Override
+    public String toString() {
+        return asEnum().toString() + " (" + getSuit().toString() + ")";
+    }
 }

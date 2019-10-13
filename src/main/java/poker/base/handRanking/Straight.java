@@ -21,4 +21,9 @@ public class Straight extends HandRanking {
     public poker.base.enums.HandRanking asEnum() {
         return poker.base.enums.HandRanking.STRAIGHT;
     }
+
+    @Override
+    public String toString() {
+        return asEnum().toString() + " (" + getHighRank().toString() + ", " + getLowRank().toString() + ")";
+    }
 }

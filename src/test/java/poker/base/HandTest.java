@@ -1,8 +1,8 @@
 package poker.base;
 
 import org.junit.Test;
-import poker.base.Card;
-import poker.base.Hand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
 import poker.base.handRanking.*;
@@ -15,6 +15,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class HandTest {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // Royal Flush
 
@@ -34,6 +36,8 @@ public class HandTest {
 
         RoyalFlush royalFlush = (RoyalFlush) handRanking;
         assertEquals(Suit.SPADES, royalFlush.getSuit());
+
+        logger.info("Royal Flush (Spades): '{}'", royalFlush);
     }
 
     @Test
@@ -71,6 +75,8 @@ public class HandTest {
         assertEquals(Suit.SPADES, straightFlush.getHighCard().getSuit());
         assertEquals(Rank.SIX, straightFlush.getLowCard().getRank());
         assertEquals(Rank.TEN, straightFlush.getHighCard().getRank());
+
+        logger.info("Straight Flush (Ten of Spades, Six of Spades): '{}'", straightFlush);
     }
 
     @Test
@@ -119,6 +125,8 @@ public class HandTest {
 
         FourOfAKind fourOfAKind = (FourOfAKind) handRanking;
         assertEquals(Rank.JACK, fourOfAKind.getRank());
+
+        logger.info("Four of a Kind (Jack): '{}'", fourOfAKind);
     }
 
     // Full House
@@ -140,6 +148,8 @@ public class HandTest {
         FullHouse fullHouse = (FullHouse) handRanking;
         assertEquals(Rank.TEN, fullHouse.getThreeOfAKindRank());
         assertEquals(Rank.FIVE, fullHouse.getTwoOfAKindRank());
+
+        logger.info("Full House (3x Ten, 2x Five): '{}'", fullHouse);
     }
 
     // Flush
@@ -160,6 +170,8 @@ public class HandTest {
 
         Flush flush = (Flush) handRanking;
         assertEquals(Suit.SPADES, flush.getSuit());
+
+        logger.info("Flush (Spades): '{}'", flush);
     }
 
     @Test
@@ -196,6 +208,8 @@ public class HandTest {
         Straight straight = (Straight) handRanking;
         assertEquals(Rank.TWO, straight.getLowRank());
         assertEquals(Rank.SIX, straight.getHighRank());
+
+        logger.info("Straight (Six, Two): '{}'", straight);
     }
 
     @Test
@@ -231,6 +245,8 @@ public class HandTest {
 
         ThreeOfAKind threeOfAKind = (ThreeOfAKind) handRanking;
         assertEquals(Rank.ACE, threeOfAKind.getRank());
+
+        logger.info("Three of a Kind (Ace): '{}'", threeOfAKind);
     }
 
     @Test
@@ -269,6 +285,8 @@ public class HandTest {
         ranks.add(Rank.KING);
         ranks.add(Rank.ACE);
         assertEquals(ranks, twoPair.getRanks());
+
+        logger.info("Two Pair ([King, Ace]), '{}'", twoPair);
     }
 
     // Pair
@@ -289,6 +307,8 @@ public class HandTest {
 
         Pair pair = (Pair) handRanking;
         assertEquals(Rank.ACE, pair.getRank());
+
+        logger.info("Pair (Ace): '{}'", pair);
     }
 
     // High Card
@@ -309,5 +329,7 @@ public class HandTest {
 
         HighCard highCard = (HighCard) handRanking;
         assertEquals(Rank.ACE, highCard.getRank());
+
+        logger.info("High Card (Ace): '{}'", highCard);
     }
 }

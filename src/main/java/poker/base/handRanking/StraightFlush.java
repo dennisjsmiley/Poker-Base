@@ -21,4 +21,9 @@ public class StraightFlush extends HandRanking {
     public poker.base.enums.HandRanking asEnum() {
         return poker.base.enums.HandRanking.STRAIGHT_FLUSH;
     }
+
+    @Override
+    public String toString() {
+        return asEnum().toString() + " (" + getHighCard().toString() + ", " + getLowCard().toString() + ")";
+    }
 }
