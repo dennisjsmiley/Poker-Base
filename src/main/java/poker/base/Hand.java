@@ -3,6 +3,7 @@ package poker.base;
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
 import poker.base.exception.NullHandException;
+import poker.base.handRanking.*;
 
 import java.util.*;
 
@@ -185,5 +186,28 @@ public class Hand {
         }
 
         return getThreeOfAKindRank().isPresent() && !getTwoOfAKindRank().isPresent();
+    }
+
+    public HandRanking getHandRanking() {
+        HandRanking handRanking = null;
+
+        if (isRoyalFlush()) {
+            handRanking = new RoyalFlush(this);
+        } else if (isStraightFlush()) {
+            handRanking = new StraightFlush(this);
+        } else if (isFourOfAKind()) {
+            handRanking = new FourOfAKind(this);
+        } else if (isFullHouse()) {
+            handRanking = new FullHouse(this);
+        } else if (isFlush()) {
+            handRanking = new Flush(this);
+        } else if (isStraight()) {
+            handRanking = new Straight(this);
+        } else if (isThreeOfAKind()) {
+            handRanking = new ThreeOfAKind(this);
+        }
+
+        // other hand rankings not yet handled
+        return handRanking;
     }
 }

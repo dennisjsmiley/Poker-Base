@@ -1,10 +1,11 @@
-package poker.base.handRanking;
+package poker.base;
 
 import org.junit.Test;
 import poker.base.Card;
 import poker.base.Hand;
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
+import poker.base.handRanking.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,14 +14,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class HandRankingFactoryTest {
-
-    private HandRankingFactory handRankingFactory = new HandRankingFactory();
+public class HandTest {
 
     // Royal Flush
 
     @Test
-    public void testHandRankingFactory_RoyalFlush_Spades() {
+    public void testHand_GetHandRanking_RoyalFlush_Spades() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.SPADES, Rank.KING));
@@ -30,7 +29,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof RoyalFlush);
 
         RoyalFlush royalFlush = (RoyalFlush) handRanking;
@@ -38,7 +37,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeRoyalFlush_SpadesAndDiamonds() {
+    public void testHand_GetHandRanking_WouldBeRoyalFlush_SpadesAndDiamonds() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.SPADES, Rank.KING));
@@ -48,13 +47,13 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        assertFalse(handRankingFactory.build(hand) instanceof RoyalFlush);
+        assertFalse(hand.getHandRanking() instanceof RoyalFlush);
     }
 
     // Straight Flush
 
     @Test
-    public void testHandRankingFactory_StraightFlush_Spades() {
+    public void testHand_GetHandRanking_StraightFlush_Spades() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
@@ -64,7 +63,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof StraightFlush);
 
         StraightFlush straightFlush = (StraightFlush) handRanking;
@@ -75,7 +74,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeStraightFlush_Spades() {
+    public void testHand_GetHandRanking_WouldBeStraightFlush_Spades() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
@@ -85,11 +84,11 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        assertFalse(handRankingFactory.build(hand) instanceof StraightFlush);
+        assertFalse(hand.getHandRanking() instanceof StraightFlush);
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeStraightFlush_SpadesAndDiamonds() {
+    public void testHand_GetHandRanking_WouldBeStraightFlush_SpadesAndDiamonds() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TEN));
         cards.add(new Card(Suit.SPADES, Rank.NINE));
@@ -99,13 +98,13 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        assertFalse(handRankingFactory.build(hand) instanceof StraightFlush);
+        assertFalse(hand.getHandRanking() instanceof StraightFlush);
     }
 
     // Four of a Kind
 
     @Test
-    public void testHandRankingFactory_FourOfAKind_Jacks() {
+    public void testHand_GetHandRanking_FourOfAKind_Jacks() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.HEARTS, Rank.JACK));
         cards.add(new Card(Suit.DIAMONDS, Rank.JACK));
@@ -115,7 +114,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof FourOfAKind);
 
         FourOfAKind fourOfAKind = (FourOfAKind) handRanking;
@@ -125,7 +124,7 @@ public class HandRankingFactoryTest {
     // Full House
 
     @Test
-    public void testHandRankingFactory_FullHouse() {
+    public void testHand_GetHandRanking_FullHouse() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.HEARTS, Rank.TEN));
         cards.add(new Card(Suit.DIAMONDS, Rank.TEN));
@@ -135,7 +134,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof FullHouse);
 
         FullHouse fullHouse = (FullHouse) handRanking;
@@ -146,7 +145,7 @@ public class HandRankingFactoryTest {
     // Flush
 
     @Test
-    public void testHandRankingFactory_Flush() {
+    public void testHand_GetHandRanking_Flush() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.SPADES, Rank.FOUR));
@@ -156,7 +155,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof Flush);
 
         Flush flush = (Flush) handRanking;
@@ -164,7 +163,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_WouldBeFlush() {
+    public void testHand_GetHandRanking_WouldBeFlush() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.SPADES, Rank.THREE));
@@ -174,14 +173,14 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof StraightFlush);
     }
 
     // Straight
 
     @Test
-    public void testHandRankingFactory_Straight() {
+    public void testHand_GetHandRanking_Straight() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.HEARTS, Rank.THREE));
@@ -191,7 +190,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof Straight);
 
         Straight straight = (Straight) handRanking;
@@ -200,7 +199,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_AlmostStraight() {
+    public void testHand_GetHandRanking_AlmostStraight() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.TWO));
         cards.add(new Card(Suit.HEARTS, Rank.THREE));
@@ -210,14 +209,14 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertFalse(handRanking instanceof Straight);
     }
 
     // Three of a Kind
 
     @Test
-    public void testHandRankingFactory_ThreeOfAKind() {
+    public void testHand_GetHandRanking_ThreeOfAKind() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.CLUBS, Rank.ACE));
@@ -227,7 +226,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof ThreeOfAKind);
 
         ThreeOfAKind threeOfAKind = (ThreeOfAKind) handRanking;
@@ -235,7 +234,7 @@ public class HandRankingFactoryTest {
     }
 
     @Test
-    public void testHandRankingFactory_NotThreeOfAKindButFullHouse() {
+    public void testHand_GetHandRanking_NotThreeOfAKindButFullHouse() {
         Set<Card> cards = new HashSet<>();
         cards.add(new Card(Suit.SPADES, Rank.ACE));
         cards.add(new Card(Suit.CLUBS, Rank.ACE));
@@ -245,7 +244,7 @@ public class HandRankingFactoryTest {
 
         Hand hand = new Hand(cards);
 
-        HandRanking handRanking = handRankingFactory.build(hand);
+        HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof FullHouse);
     }
 }
