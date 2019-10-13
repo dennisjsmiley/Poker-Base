@@ -9,9 +9,9 @@ import java.util.*;
 public class Hand {
     private final Set<Card> cards;
 
-    public Hand(Set<Card> cards) throws NullHandException {
+    public Hand(Set<Card> cards) {
         if (cards == null) {
-            throw new NullHandException();
+            cards = new HashSet<>();
         }
 
         this.cards = Collections.unmodifiableSet(cards);
