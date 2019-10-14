@@ -7,7 +7,7 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class Card {
+public class Card implements Comparable<Card> {
     private final Suit suit;
     private final Rank rank;
 
@@ -65,5 +65,13 @@ public class Card {
 
     public String toShortCode() {
         return getRank().getShortCode() + getSuit().getShortCode();
+    }
+
+    @Override
+    public int compareTo(Card other) {
+        if (other == null) {
+            throw new NullPointerException();
+        }
+        return getRank().compareTo(other.getRank());
     }
 }
