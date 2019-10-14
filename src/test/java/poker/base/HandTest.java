@@ -332,4 +332,20 @@ public class HandTest {
 
         logger.info("High Card (Ace): '{}'", highCard);
     }
+
+    // Short Codes
+
+    @Test
+    public void testHand_FromShortCodes() {
+        Hand hand = Hand.fromShortCodes("as,ks,qs,js,10s");
+        logger.info("hand: {}", hand);
+
+        HandRanking handRanking = hand.getHandRanking();
+        assertTrue(handRanking instanceof RoyalFlush);
+
+        logger.info("handRanking: {}", handRanking);
+
+        RoyalFlush royalFlush = (RoyalFlush) handRanking;
+        assertEquals(Suit.SPADES, royalFlush.getSuit());
+    }
 }

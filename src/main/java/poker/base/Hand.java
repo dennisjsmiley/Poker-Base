@@ -21,6 +21,13 @@ public class Hand {
         return cards;
     }
 
+    public List<Card> getCardsSorted() {
+        List<Card> cards = new ArrayList<>();
+        cards.addAll(getCards());
+        cards.sort((card1, card2) -> (card2.compareTo(card1)));
+        return cards;
+    }
+
     public Card getLowCard() {
         Card lowCard = null;
         for (Card card : getCards()) {
@@ -201,5 +208,30 @@ public class Hand {
         }
 
         return handRanking;
+    }
+
+    public static Hand fromShortCodes(String string) {
+        Set<Card> cards = new HashSet<>();
+
+        String[] parts = string.split(",");
+        for (String part : parts) {
+            Optional<Card> optionalCard = Card.fromShortCode(part.trim());
+            optionalCard.ifPresent(cards::add);
+        }
+
+        return new Hand(cards);
+    }
+
+    public String toShortCode() {
+        List<String> parts = new ArrayList<>();
+        for (Card card : getCardsSorted()) {
+            parts.add(card.toShortCode());
+        }
+        return String.join(",", parts);
+    }
+
+    @Override
+    public String toString() {
+        return toShortCode();
     }
 }
