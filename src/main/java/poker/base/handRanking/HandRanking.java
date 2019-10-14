@@ -21,13 +21,10 @@ public abstract class HandRanking implements Comparable<HandRanking> {
             throw new NullPointerException();
         }
 
-        if (asEnum().toInteger() > other.asEnum().toInteger()) {
-            return 1;
-        } else if (asEnum().toInteger() < other.asEnum().toInteger()) {
-            return -1;
-        } else {
-            // todo: handle tie breaker cases
-            return 0;
+        int result = asEnum().compareTo(other.asEnum());
+        if (result == 0) {
+            // todo: handle tie breakers
         }
+        return result; 
     }
 }
