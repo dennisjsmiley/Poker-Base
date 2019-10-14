@@ -25,7 +25,7 @@ public class Hand {
         List<Card> cards = new ArrayList<>();
         cards.addAll(getCards());
         cards.sort((card1, card2) -> (card2.compareTo(card1)));
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public Card getLowCard() {
