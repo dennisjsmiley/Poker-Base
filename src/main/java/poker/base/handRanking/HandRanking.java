@@ -149,7 +149,7 @@ public abstract class HandRanking implements Comparable<HandRanking> {
                 .collect(Collectors.toList());
         selfKickerCards.sort((card1, card2) -> card2.compareTo(card1));
 
-        List<Card> otherKickerCards = self
+        List<Card> otherKickerCards = other
                 .getHand()
                 .getCards()
                 .stream()
