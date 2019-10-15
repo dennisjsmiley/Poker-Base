@@ -5,6 +5,7 @@ import poker.base.enums.Rank;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TwoPair extends HandRanking {
@@ -17,6 +18,12 @@ public class TwoPair extends HandRanking {
         Set<Rank> ranks = new HashSet<>();
         ranks.addAll(getHand().getTwoOfAKindRank());
         return Collections.unmodifiableSet(ranks);
+    }
+
+    public List<Rank> getRanksSorted() {
+        List<Rank> ranks = getHand().getTwoOfAKindRank();
+        ranks.sort((rank1, rank2) -> rank2.compareTo(rank1));
+        return Collections.unmodifiableList(ranks);
     }
 
     @Override

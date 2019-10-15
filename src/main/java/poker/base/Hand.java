@@ -90,7 +90,7 @@ public class Hand {
         return Optional.empty();
     }
 
-    private List<Rank> getXOfAKindRank(int x) {
+    public List<Rank> getXOfAKindRank(int x) {
         List<Rank> ranks = new ArrayList<>();
         for (Map.Entry<Rank, Integer> rankCountEntry : getRankCount().entrySet()) {
             if (rankCountEntry.getValue() == x) {
