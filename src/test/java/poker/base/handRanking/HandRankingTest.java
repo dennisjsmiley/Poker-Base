@@ -29,6 +29,8 @@ public class HandRankingTest {
             HandRanking handRanking2 = hand2.getHandRanking();
 
             int actualResult = handRanking1.compareTo(handRanking2);
+
+            // adjust result to be 1, 0, or -1 
             if (actualResult > 0) {
                 actualResult = 1;
             } else if (actualResult < 0) {
