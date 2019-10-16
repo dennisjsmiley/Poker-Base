@@ -169,6 +169,20 @@ public abstract class HandRanking implements Comparable<HandRanking> {
     }
 
     int handleHighCardTie(HighCard self, HighCard other) {
-        return self.getRank().compareTo(other.getRank());
+        List<Card> selfCards = self.getHand().getCardsSorted();
+        List<Card> otherCards = other.getHand().getCardsSorted();
+
+        int result;
+        for (int i = 0; i < 5; i++) {
+            Card selfCard = selfCards.get(i);
+            Card otherCard = otherCards.get(i);
+
+            result = selfCard.compareTo(otherCard);
+
+            if (result != 0) {
+                return result;
+            }
+        }
+        return 0;
     }
 }
