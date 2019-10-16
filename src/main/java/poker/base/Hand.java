@@ -95,6 +95,9 @@ public class Hand {
         for (Map.Entry<Rank, Integer> rankCountEntry : getRankCount().entrySet()) {
             if (rankCountEntry.getValue() == x) {
                 ranks.add(rankCountEntry.getKey());
+                if (x > 2) {
+                    break;
+                }
             }
         }
         return Collections.unmodifiableList(ranks);
