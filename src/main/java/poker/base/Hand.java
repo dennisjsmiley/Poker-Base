@@ -61,7 +61,7 @@ public class Hand {
         for (Card card : getCards()) {
             handSuits.add(card.getSuit());
         }
-        return handSuits;
+        return Collections.unmodifiableSet(handSuits);
     }
 
     public Map<Rank, Integer> getRankCount() {
@@ -73,7 +73,7 @@ public class Hand {
                 rankCount.put(card.getRank(), 1);
             }
         }
-        return rankCount;
+        return Collections.unmodifiableMap(rankCount);
     }
 
     public boolean isSingleSuit() {
