@@ -93,21 +93,7 @@ public abstract class HandRanking implements Comparable<HandRanking> {
     }
 
     int handleFlushTie(Flush self, Flush other) {
-        List<Card> selfCards = self.getHand().getCardsSorted();
-        List<Card> otherCards = other.getHand().getCardsSorted();
-
-        int result;
-        for (int i = 0; i < 5; i++) {
-            Card selfCard = selfCards.get(i);
-            Card otherCard = otherCards.get(i);
-
-            result = selfCard.compareTo(otherCard);
-
-            if (result != 0) {
-                return result;
-            }
-        }
-        return 0;
+        return compareHand(self, other);
     }
 
     int handleStraightTie(Straight self, Straight other) {
@@ -169,6 +155,10 @@ public abstract class HandRanking implements Comparable<HandRanking> {
     }
 
     int handleHighCardTie(HighCard self, HighCard other) {
+        return compareHand(self, other);
+    }
+
+    private int compareHand(HandRanking self, HandRanking other) {
         List<Card> selfCards = self.getHand().getCardsSorted();
         List<Card> otherCards = other.getHand().getCardsSorted();
 
