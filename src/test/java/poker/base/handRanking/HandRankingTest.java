@@ -28,19 +28,25 @@ public class HandRankingTest {
             Hand hand2 = Hand.fromShortCodes(shortCodes2);
             HandRanking handRanking2 = hand2.getHandRanking();
 
-            int actualResult = handRanking1.compareTo(handRanking2);
-
-            // adjust result to be 1, 0, or -1 
-            if (actualResult > 0) {
-                actualResult = 1;
-            } else if (actualResult < 0) {
-                actualResult = -1;
-            }
+            int actualResult = adjustResult(handRanking1.compareTo(handRanking2));
 
             logger.info("hand1: {}\thand2: {}\texpectedResult: {}\tactualResult: {}\tsuccess: {}",
                     shortCodes1, shortCodes2, expectedResult, actualResult, expectedResult == actualResult);
 
             assertEquals(expectedResult, actualResult);
         }
+    }
+
+    private int adjustResult(int rawResult) {
+        // adjust result to be 1, 0, or -1
+        int result;
+        if (rawResult > 0) {
+            result = 1;
+        } else if (rawResult < 0) {
+            result = -1;
+        } else {
+            result = 0;
+        }
+        return result;
     }
 }
