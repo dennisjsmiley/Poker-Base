@@ -12,7 +12,28 @@ public class HandRankingTest {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Object[][] testCases = {
+            // Tie Breakers
+
+            // Royal Flush
             {"as,ks,qs,js,10s", "ad,kd,qd,jd,10d", 0},
+
+            // Straight Flush
+            {"10d,9d,8d,7d,6d", "js,10s,9s,8s,7s", -1},
+
+            // Four of a Kind
+            {"as,ac,ad,ah,js", "as,ac,ad,ah,ks", -1},
+            {"as,ac,ad,ah,js", "js,jc,jd,jh,ks", 1},
+
+            // Full House
+            {"as,ac,ad,ks,qs", "js,jc,jd,ks,qs", 1},
+
+            // Flush
+            {"10d,9c,8h,7s,6c", "10h,9s,8s,7h,6d", 0},
+            {"10d,9c,8h,7s,6c", "jh,10s,9s,8h,7d", -1},
+
+            
+
+
     };
 
     @Test
