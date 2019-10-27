@@ -5,13 +5,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import poker.base.Hand;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 public class HandRankingTest {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final Object[][] testCases = {
+    private final Object[][] tieBreakerTestCases = {
             // Tie Breakers
 
             // Royal Flush
@@ -53,8 +56,8 @@ public class HandRankingTest {
     };
 
     @Test
-    public void testHandRanking_compareTo() {
-        for (Object[] testCase : testCases) {
+    public void testHandRanking_compareTo_TieBreakers() {
+        for (Object[] testCase : tieBreakerTestCases) {
             String shortCodes1 = (String) testCase[0];
             String shortCodes2 = (String) testCase[1];
             int expectedResult = (int) testCase[2];
@@ -72,6 +75,65 @@ public class HandRankingTest {
 
             assertEquals(expectedResult, actualResult);
         }
+    }
+
+    @Test
+    public void testHandRanking_compareTo_NoTies() {
+        Map<poker.base.enums.HandRanking, HandRanking> handRankingMap = new HashMap<>();
+
+        HandRanking handRanking;
+
+        // Royal Flush
+        handRanking = Hand.fromShortCodes("as,ks,qs,js,10s").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Straight Flush
+        handRanking = Hand.fromShortCodes("10d,9d,8d,7d,6d").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Four of a Kind
+        handRanking = Hand.fromShortCodes("as,ac,ad,ah,js").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Full House
+        handRanking = Hand.fromShortCodes("as,ac,ad,ks,qs").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Flush
+        handRanking = Hand.fromShortCodes("10d,9c,8h,7s,6c").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Straight
+        handRanking = Hand.fromShortCodes("6c,5s,4d,3h,2c").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Three of a Kind
+        handRanking = Hand.fromShortCodes("as,ac,ah,3d,2c").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Two Pair
+        handRanking = Hand.fromShortCodes("as,ac,ks,kc,5h").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // Pair
+        handRanking = Hand.fromShortCodes("as,ac,kh,qd,js").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        // High Card
+        handRanking = Hand.fromShortCodes("10d,8h,7s,5c,3d").getHandRanking();
+        handRankingMap.put(handRanking.asEnum(), handRanking);
+
+        for (poker.base.enums.HandRanking handRankingEnum1 : handRankingMap.keySet()) {
+            for (poker.base.enums.HandRanking handRankingEnum2 : handRankingMap.keySet()) {
+                HandRanking handRanking1 = handRankingMap.get(handRankingEnum1);
+                HandRanking handRanking2 = handRankingMap.get(handRankingEnum2);
+
+                assertEquals(handRankingEnum1.compareTo(handRankingEnum2), handRanking1.compareTo(handRanking2));
+            }
+        }
+
+
+
     }
 
     private int adjustResult(int rawResult) {
