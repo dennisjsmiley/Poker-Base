@@ -31,7 +31,23 @@ public class HandRankingTest {
             {"10d,9c,8h,7s,6c", "10h,9s,8s,7h,6d", 0},
             {"10d,9c,8h,7s,6c", "jh,10s,9s,8h,7d", -1},
 
-            
+            // Straight
+            {"6c,5s,4d,3h,2c", "7s,6d,5c,4h,3c", -1},
+
+            // Three of a Kind
+            {"as,ac,ah,3d,2c", "ks,kc,kd,4d,3d", 1},
+
+            // Two Pair
+            {"as,ac,ks,kc,5h", "ks,kc,qs,qh,6h", 1},
+            {"as,ac,ks,kc,5h", "as,ac,ks,kh,6h", -1},
+
+            // Pair
+            {"as,ac,kh,qd,js", "kh,kd,qs,jd,10h", 1},
+            {"as,ac,qh,jd,10s", "as,ac,kh,qd,js", 1},
+            {"as,ac,qh,10s,9h", "as,ac,qh,jd,10s", -1},
+
+            // High Card
+            {"10d,8h,7s,5c,3d", "kd,8h,7s,5c,3d", -1}
 
 
     };

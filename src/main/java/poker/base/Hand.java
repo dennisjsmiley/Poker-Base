@@ -100,7 +100,7 @@ public class Hand {
                 }
             }
         }
-        return Collections.unmodifiableList(ranks);
+        return ranks;
     }
 
     public Optional<Rank> getFourOfAKindRank() {
