@@ -128,7 +128,13 @@ public class HandRankingTest {
                 HandRanking handRanking1 = handRankingMap.get(handRankingEnum1);
                 HandRanking handRanking2 = handRankingMap.get(handRankingEnum2);
 
-                assertEquals(handRankingEnum1.compareTo(handRankingEnum2), handRanking1.compareTo(handRanking2));
+                int expected = handRankingEnum1.compareTo(handRankingEnum2);
+                int actual = handRanking1.compareTo(handRanking2);
+
+                logger.info("handRanking1: {}, handRanking2: {}, expected: {}, actual: {}, success: {}",
+                        handRankingEnum1, handRankingEnum2, expected, actual, expected == actual);
+
+                assertEquals(expected, actual);
             }
         }
 
