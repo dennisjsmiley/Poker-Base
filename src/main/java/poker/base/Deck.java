@@ -12,9 +12,11 @@ import java.util.List;
  */
 public class Deck {
 
+    private int index;
     private final List<Card> cards;
 
     public Deck() {
+        index = 0;
         cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
@@ -31,5 +33,23 @@ public class Deck {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public List<Card> getFlop() {
+        List<Card> flop = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            flop.add(draw());
+        }
+        return flop;
+    }
+
+    public Card draw() {
+        Card card = cards.get(index);
+        index++;
+        return card;
+    }
+
+    int getIndex() {
+        return index;
     }
 }

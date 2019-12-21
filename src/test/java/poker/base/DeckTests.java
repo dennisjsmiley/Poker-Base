@@ -26,4 +26,33 @@ public class DeckTests {
         }
         assertEquals(52, cards.size());
     }
+
+    @Test
+    public void testGetFlop() {
+        Deck deck = new Deck();
+        List<Card> cards = deck.getCards();
+        assertEquals(52, cards.size());
+
+        List<Card> flop = deck.getFlop();
+        assertEquals(3, flop.size());
+
+        for (int i = 0; i < 3; i++) {
+            assertEquals(cards.get(i), flop.get(i));
+        }
+
+        assertEquals(3, deck.getIndex());
+
+        flop = deck.getFlop();
+        assertEquals(3, flop.size());
+
+        for (int i = 0; i < 3; i++) {
+            assertEquals(flop.get(i), cards.get(3 + i));
+        }
+
+        assertEquals(6, deck.getIndex());
+
+        Card card = deck.draw();
+        assertEquals(7, deck.getIndex());
+        assertEquals(cards.get(6), card);
+    }
 }
