@@ -55,4 +55,19 @@ public class DeckTests {
         assertEquals(7, deck.getIndex());
         assertEquals(cards.get(6), card);
     }
+
+    @Test
+    public void testDraw() {
+        Deck deck = new Deck();
+        List<Card> cards = deck.getCards();
+        assertEquals(52, cards.size());
+
+        Card card = deck.draw();
+        assertEquals(cards.get(0), card);
+        assertEquals(1, deck.getIndex());
+
+        card = deck.draw();
+        assertEquals(cards.get(1), card);
+        assertEquals(2, deck.getIndex());
+    }
 }
