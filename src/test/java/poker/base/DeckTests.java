@@ -40,20 +40,15 @@ public class DeckTests {
             assertEquals(cards.get(i), flop.get(i));
         }
 
-        assertEquals(3, deck.getIndex());
-
         flop = deck.getFlop();
         assertEquals(3, flop.size());
 
         for (int i = 0; i < 3; i++) {
-            assertEquals(flop.get(i), cards.get(3 + i));
+            assertEquals(flop.get(i), cards.get(i));
         }
 
-        assertEquals(6, deck.getIndex());
-
         Card card = deck.draw();
-        assertEquals(7, deck.getIndex());
-        assertEquals(cards.get(6), card);
+        assertEquals(cards.get(3), card);
     }
 
     @Test
@@ -64,10 +59,8 @@ public class DeckTests {
 
         Card card = deck.draw();
         assertEquals(cards.get(0), card);
-        assertEquals(1, deck.getIndex());
 
         card = deck.draw();
         assertEquals(cards.get(1), card);
-        assertEquals(2, deck.getIndex());
     }
 }

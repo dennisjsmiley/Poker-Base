@@ -14,6 +14,7 @@ public class Deck {
 
     private int index;
     private final List<Card> cards;
+    private final List<Card> flop;
 
     public Deck() {
         index = 0;
@@ -24,6 +25,7 @@ public class Deck {
                 cards.add(card);
             }
         }
+        flop = new ArrayList<>();
         shuffle();
     }
 
@@ -36,9 +38,10 @@ public class Deck {
     }
 
     public List<Card> getFlop() {
-        List<Card> flop = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            flop.add(draw());
+        if (flop.isEmpty()) {
+            for (int i = 0; i < 3; i++) {
+                flop.add(draw());
+            }
         }
         return flop;
     }
@@ -47,9 +50,5 @@ public class Deck {
         Card card = cards.get(index);
         index++;
         return card;
-    }
-
-    int getIndex() {
-        return index;
     }
 }
