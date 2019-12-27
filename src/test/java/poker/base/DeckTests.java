@@ -28,7 +28,7 @@ public class DeckTests {
     }
 
     @Test
-    public void testGetFlop() {
+    public void testGetFlopTurnAndRiver() {
         int numPlayers = 5;
         Deck deck = new Deck();
         List<Card> cards = deck.getCards();
