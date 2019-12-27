@@ -18,14 +18,13 @@ public class Deck {
 
     public Deck() {
         index = 0;
-        List<Card> cards = new ArrayList<>();
+        cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 Card card = new Card(suit, rank);
                 cards.add(card);
             }
         }
-        this.cards = Collections.unmodifiableList(cards);
         flop = new ArrayList<>();
         shuffle();
     }

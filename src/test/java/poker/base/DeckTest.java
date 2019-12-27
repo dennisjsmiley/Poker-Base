@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by djsmiley on 12/21/19.
  */
-public class DeckTests {
+public class DeckTest {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
