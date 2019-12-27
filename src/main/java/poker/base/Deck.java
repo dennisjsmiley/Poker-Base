@@ -18,19 +18,23 @@ public class Deck {
 
     public Deck() {
         index = 0;
-        cards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 Card card = new Card(suit, rank);
                 cards.add(card);
             }
         }
+        this.cards = Collections.unmodifiableList(cards);
         flop = new ArrayList<>();
         shuffle();
     }
 
     public void shuffle() {
-        Collections.shuffle(cards);
+        synchronized(cards) {
+            Collections.shuffle(cards);
+            index = 0;
+        }
     }
 
     public List<Card> getCards() {
@@ -38,17 +42,22 @@ public class Deck {
     }
 
     public List<Card> getFlop() {
-        if (flop.isEmpty()) {
-            for (int i = 0; i < 3; i++) {
-                flop.add(draw());
+        synchronized(flop) {
+            if (flop.isEmpty()) {
+                for (int i = 0; i < 3; i++) {
+                    flop.add(draw());
+                }
             }
         }
         return flop;
     }
 
     public Card draw() {
-        Card card = cards.get(index);
-        index++;
+        Card card;
+        synchronized(cards) {
+            card = cards.get(index);
+            index++;
+        }
         return card;
     }
 }
