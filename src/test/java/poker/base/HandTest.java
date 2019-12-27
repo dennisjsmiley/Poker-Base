@@ -7,8 +7,7 @@ import poker.base.enums.Rank;
 import poker.base.enums.Suit;
 import poker.base.handRanking.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -347,5 +346,37 @@ public class HandTest {
 
         RoyalFlush royalFlush = (RoyalFlush) handRanking;
         assertEquals(Suit.SPADES, royalFlush.getSuit());
+    }
+
+    @Test
+    public void testHand_getHands() {
+        List<Card> communityCards = Arrays.asList(
+                new Card(Suit.HEARTS, Rank.SEVEN),
+                new Card(Suit.DIAMONDS, Rank.ACE),
+                new Card(Suit.CLUBS, Rank.QUEEN),
+                new Card(Suit.HEARTS, Rank.FOUR),
+                new Card(Suit.SPADES, Rank.TEN)
+        );
+
+        Set<Card> holdCards = new HashSet<>();
+        holdCards.addAll(Arrays.asList(
+                new Card(Suit.SPADES, Rank.ACE),
+                new Card(Suit.DIAMONDS, Rank.QUEEN)
+        ));
+
+        List<Hand> expectedHands = Arrays.asList(
+                Hand.fromShortCodes("as,ad,qd,qc,7h"),
+                Hand.fromShortCodes("as,ad,qd,qc,4h"),
+                Hand.fromShortCodes("as,qd,qc,10s,4h")
+        );
+
+        List<Hand> actualHands = Hand.getHands(holdCards, communityCards);
+
+        assertEquals(expectedHands, actualHands);
+
+        for (int i = 0; i < actualHands.size(); i++) {
+            Hand hand = actualHands.get(i);
+            logger.info("i: {}, hand: {}, handRanking: {}", i, hand, hand.getHandRanking());
+        }
     }
 }

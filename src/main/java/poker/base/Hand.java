@@ -6,7 +6,7 @@ import poker.base.handRanking.*;
 
 import java.util.*;
 
-public class Hand {
+public class Hand implements Comparable<Hand> {
     private final Set<Card> cards;
 
     public Hand(Set<Card> cards) {
@@ -236,5 +236,35 @@ public class Hand {
     @Override
     public String toString() {
         return toShortCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        } else if (other instanceof Hand) {
+            return cards.equals(((Hand) other).getCards());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int compareTo(Hand other) {
+        return getHandRanking().compareTo(other.getHandRanking());
+    }
+
+    public static List<Hand> getHands(Set<Card> holeCards, List<Card> communityCards) {
+        List<Hand> hands = new ArrayList<>();
+        for (int offset = 0; offset < 3; offset++) {
+            Set<Card> cards = new HashSet<>();
+            cards.addAll(holeCards);
+            cards.addAll(communityCards.subList(offset, offset + 3));
+
+            Hand hand = new Hand(cards);
+            hands.add(hand);
+        }
+        Collections.sort(hands, Collections.reverseOrder());
+        return hands;
     }
 }
