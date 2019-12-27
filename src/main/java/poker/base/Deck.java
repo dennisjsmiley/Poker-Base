@@ -38,7 +38,9 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return cards;
+        synchronized(cards) {
+            return cards;
+        }
     }
 
     public List<Card> getFlop() {
@@ -53,11 +55,10 @@ public class Deck {
     }
 
     public Card draw() {
-        Card card;
         synchronized(cards) {
-            card = cards.get(index);
+            Card card = cards.get(index);
             index++;
+            return card;
         }
-        return card;
     }
 }
