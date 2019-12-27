@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,26 +29,35 @@ public class DeckTests {
 
     @Test
     public void testGetFlop() {
+        int numPlayers = 5;
         Deck deck = new Deck();
         List<Card> cards = deck.getCards();
         assertEquals(52, cards.size());
 
+        Map<Integer, Set<Card>> playerCards = new HashMap<>();
+        for (int playerNum = 0; playerNum < numPlayers; playerNum++) {
+            playerCards.put(playerNum, new HashSet<>());
+            playerCards.get(playerNum).add(deck.draw());
+            playerCards.get(playerNum).add(deck.draw());
+        }
+
         List<Card> flop = deck.getFlop();
         assertEquals(3, flop.size());
 
-        for (int i = 0; i < 3; i++) {
-            assertEquals(cards.get(i), flop.get(i));
+        int flopStartIndex = numPlayers * 2;
+        for (int i = flopStartIndex; i < flopStartIndex + 3; i++) {
+            assertEquals(cards.get(i), flop.get(i - flopStartIndex));
         }
 
         flop = deck.getFlop();
         assertEquals(3, flop.size());
 
-        for (int i = 0; i < 3; i++) {
-            assertEquals(flop.get(i), cards.get(i));
+        for (int i = flopStartIndex; i < flopStartIndex + 3; i++) {
+            assertEquals(cards.get(i), flop.get(i - flopStartIndex));
         }
 
         Card card = deck.draw();
-        assertEquals(cards.get(3), card);
+        assertEquals(cards.get(flopStartIndex + 3), card);
     }
 
     @Test
