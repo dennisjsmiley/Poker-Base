@@ -56,8 +56,11 @@ public class DeckTests {
             assertEquals(cards.get(i), flop.get(i - flopStartIndex));
         }
 
-        Card card = deck.draw();
-        assertEquals(cards.get(flopStartIndex + 3), card);
+        Card turn = deck.draw();
+        assertEquals(cards.get(flopStartIndex + 3), turn);
+
+        Card river = deck.draw();
+        assertEquals(cards.get(flopStartIndex + 4), river);
     }
 
     @Test
