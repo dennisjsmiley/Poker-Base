@@ -78,7 +78,8 @@ public class PokerGame {
         List<PokerPlayer> winners = getWinners(gameState);
 
         for (Map.Entry<Integer, PokerPlayer> playerEntry : pokerPlayers.entrySet()) {
-            pot += playerEntry.getValue().getBet();
+            PokerPlayer player = playerEntry.getValue();
+            pot += player.getBet();
         }
 
         logger.info("winners: {}", winners);
@@ -88,14 +89,13 @@ public class PokerGame {
         if (!gameState.isActivePlayers()) {
             return new ArrayList<>();
         }
-        
+
         Map<Integer, PokerPlayer> pokerPlayers = gameState.getActivePlayersMap();
-        Set<Map.Entry<Integer, PokerPlayer>> pokerPlayerEntries = pokerPlayers.entrySet();
 
         List<Tuple<Integer, Hand>> playerHandTuples = new ArrayList<>();
-        for (Map.Entry<Integer, PokerPlayer> playerHandEntry : pokerPlayerEntries) {
-            playerHandTuples.add(new Tuple<>(playerHandEntry.getKey(), playerHandEntry.getValue().getBestHand()));
-        }
+        pokerPlayers.forEach((playerId, player) -> {
+            playerHandTuples.add(new Tuple<>(playerId, player.getBestHand()));
+        });
 
         if (playerHandTuples.size() == 1) {
             return Arrays.asList(pokerPlayers.get(playerHandTuples.get(0).getX()));
@@ -105,17 +105,19 @@ public class PokerGame {
         Hand winningHand = playerHandTuples.get(0).getY();
 
         List<PokerPlayer> winners = new ArrayList<>();
-        pokerPlayers.entrySet().forEach(pokerPlayerEntry -> {
+        pokerPlayers.forEach((playerId, player) -> {
+            Hand playerBestHand = player.getBestHand();
+
             logger.debug("getWinners -- playerId: {}, hand: {} ({}), winning hand: {} ({}), comparison: {}",
-                    pokerPlayerEntry.getKey(),
-                    pokerPlayerEntry.getValue().getBestHand(),
-                    pokerPlayerEntry.getValue().getBestHand().getHandRanking().asEnum(),
+                    playerId,
+                    playerBestHand,
+                    playerBestHand.getHandRanking().asEnum(),
                     winningHand,
                     winningHand.getHandRanking().asEnum(),
-                    pokerPlayerEntry.getValue().getBestHand().compareTo(winningHand)
+                    player.getBestHand().compareTo(winningHand)
             );
-            if (pokerPlayerEntry.getValue().getBestHand().compareTo(winningHand) == 0) {
-                winners.add(pokerPlayerEntry.getValue());
+            if (playerBestHand.compareTo(winningHand) == 0) {
+                winners.add(player);
             }
         });
 

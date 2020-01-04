@@ -92,14 +92,11 @@ public class Hand implements Comparable<Hand> {
 
     public List<Rank> getXOfAKindRank(int x) {
         List<Rank> ranks = new ArrayList<>();
-        for (Map.Entry<Rank, Integer> rankCountEntry : getRankCount().entrySet()) {
-            if (rankCountEntry.getValue() == x) {
-                ranks.add(rankCountEntry.getKey());
-                if (x > 2) {
-                    break;
-                }
+        getRankCount().forEach((rank, count) -> {
+            if (count == x) {
+                ranks.add(rank);
             }
-        }
+        });
         return ranks;
     }
 

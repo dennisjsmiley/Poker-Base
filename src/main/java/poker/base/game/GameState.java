@@ -35,11 +35,11 @@ public class GameState {
     @Wither
     private final int littleBlind;
 
-    public List<PokerPlayer> getOtherPokerPlayersList(int playerId) {
+    public List<PokerPlayer> getOtherPokerPlayersList(int targetPlayerId) {
         List<PokerPlayer> pokerPlayersList = new ArrayList<>();
-        pokerPlayers.entrySet().forEach(pokerPlayerEntry -> {
-            if (pokerPlayerEntry.getKey() != playerId) {
-                pokerPlayersList.add(pokerPlayerEntry.getValue());
+        pokerPlayers.forEach((playerId, player) -> {
+            if (playerId != targetPlayerId) {
+                pokerPlayersList.add(player);
             }
         });
         return pokerPlayersList;
@@ -47,21 +47,17 @@ public class GameState {
 
     public List<PokerPlayer> getActivePlayers() {
         List<PokerPlayer> activePlayers = new ArrayList<>();
-        for (Map.Entry<Integer,PokerPlayer> playerEntry : pokerPlayers.entrySet()) {
-            if (!playerEntry.getValue().isFolded()) {
-                activePlayers.add(playerEntry.getValue());
+        pokerPlayers.forEach((playerId, player) -> {
+            if (!player.isFolded()) {
+                activePlayers.add(player);
             }
-        }
+        });
         return activePlayers;
     }
 
     public Map<Integer, PokerPlayer> getActivePlayersMap() {
         Map<Integer, PokerPlayer> activePlayers = new HashMap<>();
-        for (Map.Entry<Integer,PokerPlayer> playerEntry : pokerPlayers.entrySet()) {
-            if (!playerEntry.getValue().isFolded()) {
-                activePlayers.put(playerEntry.getKey(), playerEntry.getValue());
-            }
-        }
+        getActivePlayers().forEach(player -> activePlayers.put(player.getPlayerId(), player));
         return activePlayers;
     }
 
