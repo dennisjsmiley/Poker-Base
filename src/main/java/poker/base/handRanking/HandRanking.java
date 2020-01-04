@@ -1,13 +1,18 @@
 package poker.base.handRanking;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import poker.base.Card;
 import poker.base.Hand;
 import poker.base.enums.Rank;
+import poker.base.util.PokerUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class HandRanking implements Comparable<HandRanking> {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private final Hand hand;
 
     public HandRanking(Hand hand) {
@@ -142,9 +147,9 @@ public abstract class HandRanking implements Comparable<HandRanking> {
                 .filter(card -> card.getRank() != other.getRank())
                 .collect(Collectors.toList());
         otherKickerCards.sort((card1, card2) -> card2.compareTo(card1));
-
+        
         for (int i = 0; i < 3; i++) {
-            result = selfKickerCards.get(i).compareTo(otherKickerCards.get(i));
+            result = otherKickerCards.get(i).compareTo(selfKickerCards.get(i));
             if (result != 0) {
                 return result;
             }

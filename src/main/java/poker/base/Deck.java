@@ -29,6 +29,12 @@ public class Deck {
         shuffle();
     }
 
+    public Deck(List<Card> cards) {
+        index = 0;
+        this.cards = cards;
+        flop = new ArrayList<>();
+    }
+
     public void shuffle() {
         synchronized(cards) {
             Collections.shuffle(cards);

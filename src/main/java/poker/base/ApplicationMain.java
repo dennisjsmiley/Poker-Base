@@ -1,10 +1,15 @@
 package poker.base;
 
+import poker.base.game.PokerGame;
 import poker.base.handRanking.HandRanking;
 
 public class ApplicationMain {
 
     public static void main(String[] args) {
+        doGame();
+    }
+
+    public static void rankHands(String[] args) {
         String handShortCodes1 = args[0];
         String handShortCodes2 = args[1];
 
@@ -24,5 +29,10 @@ public class ApplicationMain {
         } else {
             System.out.println("Tie between both hands");
         }
+    }
+
+    public static void doGame() {
+        PokerGame game = new PokerGame();
+        game.runGame();
     }
 }

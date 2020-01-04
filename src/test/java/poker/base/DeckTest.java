@@ -21,7 +21,7 @@ public class DeckTest {
         int i = 0;
         List<Card> cards = deck.getCards();
         for (Card card : cards) {
-            logger.info("i: {}, card: {}", i, card);
+            logger.debug("i: {}, card: {}", i, card);
             i++;
         }
         assertEquals(52, cards.size());

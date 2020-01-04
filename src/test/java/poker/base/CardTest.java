@@ -29,12 +29,12 @@ public class CardTest {
     @Test
     public void testCardToString() {
         Card card = new Card(Suit.SPADES, Rank.ACE);
-        logger.info("Ace of Spades: '{}'", card);
+        logger.debug("Ace of Spades: '{}'", card);
     }
 
     @Test
     public void testFromShortCode() {
         Card card = Card.fromShortCode("10d").get();
-        logger.info("Ten of Diamonds: {}", card);
+        logger.debug("Ten of Diamonds: {}", card);
     }
 }

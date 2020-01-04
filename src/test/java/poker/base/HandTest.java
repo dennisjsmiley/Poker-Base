@@ -36,7 +36,7 @@ public class HandTest {
         RoyalFlush royalFlush = (RoyalFlush) handRanking;
         assertEquals(Suit.SPADES, royalFlush.getSuit());
 
-        logger.info("Royal Flush (Spades): '{}'", royalFlush);
+        logger.debug("Royal Flush (Spades): '{}'", royalFlush);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class HandTest {
         assertEquals(Rank.SIX, straightFlush.getLowCard().getRank());
         assertEquals(Rank.TEN, straightFlush.getHighCard().getRank());
 
-        logger.info("Straight Flush (Ten of Spades, Six of Spades): '{}'", straightFlush);
+        logger.debug("Straight Flush (Ten of Spades, Six of Spades): '{}'", straightFlush);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class HandTest {
         FourOfAKind fourOfAKind = (FourOfAKind) handRanking;
         assertEquals(Rank.JACK, fourOfAKind.getRank());
 
-        logger.info("Four of a Kind (Jack): '{}'", fourOfAKind);
+        logger.debug("Four of a Kind (Jack): '{}'", fourOfAKind);
     }
 
     // Full House
@@ -148,7 +148,7 @@ public class HandTest {
         assertEquals(Rank.TEN, fullHouse.getThreeOfAKindRank());
         assertEquals(Rank.FIVE, fullHouse.getTwoOfAKindRank());
 
-        logger.info("Full House (3x Ten, 2x Five): '{}'", fullHouse);
+        logger.debug("Full House (3x Ten, 2x Five): '{}'", fullHouse);
     }
 
     // Flush
@@ -170,7 +170,7 @@ public class HandTest {
         Flush flush = (Flush) handRanking;
         assertEquals(Suit.SPADES, flush.getSuit());
 
-        logger.info("Flush (Spades): '{}'", flush);
+        logger.debug("Flush (Spades): '{}'", flush);
     }
 
     @Test
@@ -208,7 +208,7 @@ public class HandTest {
         assertEquals(Rank.TWO, straight.getLowRank());
         assertEquals(Rank.SIX, straight.getHighRank());
 
-        logger.info("Straight (Six, Two): '{}'", straight);
+        logger.debug("Straight (Six, Two): '{}'", straight);
     }
 
     @Test
@@ -245,7 +245,7 @@ public class HandTest {
         ThreeOfAKind threeOfAKind = (ThreeOfAKind) handRanking;
         assertEquals(Rank.ACE, threeOfAKind.getRank());
 
-        logger.info("Three of a Kind (Ace): '{}'", threeOfAKind);
+        logger.debug("Three of a Kind (Ace): '{}'", threeOfAKind);
     }
 
     @Test
@@ -285,7 +285,7 @@ public class HandTest {
         ranks.add(Rank.ACE);
         assertEquals(ranks, twoPair.getRanks());
 
-        logger.info("Two Pair ([King, Ace]), '{}'", twoPair);
+        logger.debug("Two Pair ([King, Ace]), '{}'", twoPair);
     }
 
     // Pair
@@ -307,7 +307,7 @@ public class HandTest {
         Pair pair = (Pair) handRanking;
         assertEquals(Rank.ACE, pair.getRank());
 
-        logger.info("Pair (Ace): '{}'", pair);
+        logger.debug("Pair (Ace): '{}'", pair);
     }
 
     // High Card
@@ -329,7 +329,7 @@ public class HandTest {
         HighCard highCard = (HighCard) handRanking;
         assertEquals(Rank.ACE, highCard.getRank());
 
-        logger.info("High Card (Ace): '{}'", highCard);
+        logger.debug("High Card (Ace): '{}'", highCard);
     }
 
     // Short Codes
@@ -337,12 +337,12 @@ public class HandTest {
     @Test
     public void testHand_FromShortCodes() {
         Hand hand = Hand.fromShortCodes("as,ks,qs,js,10s");
-        logger.info("hand: {}", hand);
+        logger.debug("hand: {}", hand);
 
         HandRanking handRanking = hand.getHandRanking();
         assertTrue(handRanking instanceof RoyalFlush);
 
-        logger.info("handRanking: {}", handRanking);
+        logger.debug("handRanking: {}", handRanking);
 
         RoyalFlush royalFlush = (RoyalFlush) handRanking;
         assertEquals(Suit.SPADES, royalFlush.getSuit());
@@ -376,7 +376,15 @@ public class HandTest {
 
         for (int i = 0; i < actualHands.size(); i++) {
             Hand hand = actualHands.get(i);
-            logger.info("i: {}, hand: {}, handRanking: {}", i, hand, hand.getHandRanking());
+            logger.debug("i: {}, hand: {}, handRanking: {}", i, hand, hand.getHandRanking());
         }
+    }
+
+    @Test
+    public void testThreeOfAKind() {
+        Hand hand = Hand.fromShortCodes("6s,6d,6h,3s,2c");
+        logger.debug("hand: {}, ranking: {}", hand, hand.getHandRanking());
+
+        assertTrue(hand.getHandRanking() instanceof ThreeOfAKind);
     }
 }

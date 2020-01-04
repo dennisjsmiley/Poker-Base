@@ -170,7 +170,19 @@ public class Hand implements Comparable<Hand> {
     }
 
     public boolean isStraight() {
-        return isFullHand() && !isSingleSuit() && getLowCard().getRank().toInteger() + 4 == getHighCard().getRank().toInteger();
+        boolean isFullHandAndNotSingleSuit = isFullHand() && !isSingleSuit();
+
+        boolean isAllCardsInOrderByRank = true;
+        int highRankInt = getHighCard().getRank().toInteger();
+        List<Card> cardsSorted = getCardsSorted();
+        for (int i = 0; i < cards.size(); i++) {
+            isAllCardsInOrderByRank = isAllCardsInOrderByRank && ((highRankInt - i) == cardsSorted.get(i).getRank().toInteger());
+            if (!isAllCardsInOrderByRank) {
+                break;
+            }
+        }
+
+        return isFullHandAndNotSingleSuit && isAllCardsInOrderByRank;
     }
 
     public boolean isThreeOfAKind() {

@@ -46,8 +46,8 @@ public class HandRankingTest {
 
             // Pair
             {"as,ac,kh,qd,js", "kh,kd,qs,jd,10h", 1},
-            {"as,ac,qh,jd,10s", "as,ac,kh,qd,js", 1},
-            {"as,ac,qh,10s,9h", "as,ac,qh,jd,10s", -1},
+            {"as,ac,qh,jd,9s", "as,ac,kh,qd,8s", 1},
+            {"as,ac,qh,10s,9h", "as,ac,qh,jd,10s", 1},
 
             // High Card
             {"10d,8h,7s,5c,3d", "kd,8h,7s,5c,3d", -1}
@@ -70,7 +70,7 @@ public class HandRankingTest {
 
             int actualResult = adjustResult(handRanking1.compareTo(handRanking2));
 
-            logger.info("hand1: {}\thand2: {}\texpectedResult: {}\tactualResult: {}\tsuccess: {}",
+            logger.debug("hand1: {}\thand2: {}\texpectedResult: {}\tactualResult: {}\tsuccess: {}",
                     shortCodes1, shortCodes2, expectedResult, actualResult, expectedResult == actualResult);
 
             assertEquals(expectedResult, actualResult);
@@ -131,7 +131,7 @@ public class HandRankingTest {
                 int expected = handRankingEnum1.compareTo(handRankingEnum2);
                 int actual = handRanking1.compareTo(handRanking2);
 
-                logger.info("handRanking1: {}, handRanking2: {}, expected: {}, actual: {}, success: {}",
+                logger.debug("handRanking1: {}, handRanking2: {}, expected: {}, actual: {}, success: {}",
                         handRankingEnum1, handRankingEnum2, expected, actual, expected == actual);
 
                 assertEquals(expected, actual);
