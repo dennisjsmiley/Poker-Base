@@ -116,6 +116,7 @@ public class PokerGame {
                     winningHand.getHandRanking().asEnum(),
                     player.getBestHand().compareTo(winningHand)
             );
+            
             if (playerBestHand.compareTo(winningHand) == 0) {
                 winners.add(player);
             }
