@@ -85,6 +85,10 @@ public class PokerGame {
     }
 
     public List<PokerPlayer> getWinners(GameState gameState) {
+        if (!gameState.isActivePlayers()) {
+            return new ArrayList<>();
+        }
+        
         Map<Integer, PokerPlayer> pokerPlayers = gameState.getActivePlayersMap();
         Set<Map.Entry<Integer, PokerPlayer>> pokerPlayerEntries = pokerPlayers.entrySet();
 

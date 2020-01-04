@@ -14,7 +14,7 @@ public interface PokerPlayer extends Comparable<PokerPlayer> {
 
     int getChips();
 
-    GameState bet(GameState gameState, int chips);
+    GameState placeMarginalBet(GameState gameState, int chips);
 
     int addWinnings(int chips);
 

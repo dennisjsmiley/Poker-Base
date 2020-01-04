@@ -40,7 +40,7 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     }
 
     @Override
-    public GameState bet(GameState gameState, int chips) {
+    public GameState placeMarginalBet(GameState gameState, int chips) {
         assert this.chips > chips;
         bet += chips;
         gameState = gameState.withPot(gameState.getPot() + chips);
@@ -98,9 +98,9 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     @Override
     public String toString() {
         if (getBestHand() == null) {
-            return String.format("chips: %s, hole cards: %s", chips, PokerUtil.toCardShortCodes(holeCards));
+            return String.format("playerId: %s, chips: %s, hole cards: %s", playerId, chips, PokerUtil.toCardShortCodes(holeCards));
         } else {
-            return String.format("chips: %s, best hand: %s", chips, getBestHand());
+            return String.format("playerId: %s, chips: %s, best hand: %s", playerId, chips, getBestHand());
         }
     }
 
