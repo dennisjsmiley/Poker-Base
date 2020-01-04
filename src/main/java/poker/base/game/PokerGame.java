@@ -94,6 +94,7 @@ public class PokerGame {
         }
 
         Map<Integer, PokerPlayer> pokerPlayers = gameState.getActivePlayersMap();
+        pokerPlayers.forEach((playerId, player) -> player.determineBestHand(gameState.getCommunityCards()));
 
         List<Tuple<Integer, Hand>> playerHandTuples = new ArrayList<>();
         pokerPlayers.forEach((playerId, player) -> {
@@ -129,7 +130,7 @@ public class PokerGame {
     }
 
     public GameState doBetting(GameState gameState) {
-        Map<Integer, PokerPlayer> pokerPlayers = gameState.getPokerPlayers();
+        Map<Integer, PokerPlayer> pokerPlayers = gameState.getActivePlayersMap();
         while (isStillBetting(pokerPlayers)) {
             for (int playerId = 0; playerId < pokerPlayers.size(); playerId++) {
                 PokerPlayer player = pokerPlayers.get(playerId);
@@ -137,7 +138,11 @@ public class PokerGame {
 
                 logger.info("pot: {}", gameState.getPot());
             }
+            pokerPlayers = gameState.getActivePlayersMap();
         }
+
+        gameState.getPokerPlayers().forEach((playerId, player) -> player.setIsChecked(false));
+
         return gameState;
     }
 

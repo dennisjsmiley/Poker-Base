@@ -17,8 +17,7 @@ public class DummyPokerPlayer extends BasePokerPlayer {
 
     @Override
     public GameState playBettingRound(GameState gameState) {
-        printMessage(String.format("Starting betting round -- pot: %s, player chips: %s, starting total player bet: %s",
-                gameState.getPot(), getChips(), getBet()));
+        printMessage(String.format("Starting betting round -- pot: %s, player chips: %s, starting total player bet: %s", gameState.getPot(), getChips(), getBet()));
 
         int bet = 0;
         if (gameState.isBigBlindTurn()) {
@@ -35,10 +34,10 @@ public class DummyPokerPlayer extends BasePokerPlayer {
         } else if (gameState.getPot() < 60 && gameState.getActivePlayers().size() > 2) {
             bet = 10;
             gameState = placeMarginalBet(gameState, bet);
-        } else if (getBet() >= 10 && gameState.getCommunityCards().size() == 3) {
+        } else if (getBet() > 10 && gameState.getCommunityCards().size() >= 3) {
             setIsChecked(true);
         } else {
-            setIsFolded(true);
+            gameState = setIsFolded(true, gameState);
         }
         return gameState;
     }

@@ -22,7 +22,7 @@ public interface PokerPlayer extends Comparable<PokerPlayer> {
 
     boolean isFolded();
 
-    void setIsFolded(boolean isFolded);
+    GameState setIsFolded(boolean isFolded, GameState state);
 
     boolean isChecked();
 

@@ -73,10 +73,15 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     }
 
     @Override
-    public void setIsFolded(boolean isFolded) {
+    public GameState setIsFolded(boolean isFolded, GameState gameState) {
         this.isFolded = isFolded;
         if (isFolded) {
+            gameState = gameState.withPot(gameState.getPot() + getBet());
+            bet = 0;
             printMessage("Fold");
+            return gameState;
+        } else {
+            return gameState;
         }
     }
 
@@ -120,9 +125,9 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     @Override
     public String toString() {
         if (getBestHand() == null) {
-            return String.format("playerId: %s, chips: %s, hole cards: %s", playerId, chips, PokerUtil.toCardShortCodes(holeCards));
+            return String.format("playerId: %s, chips: %s, bet: %s, hole cards: %s", playerId, chips, bet, PokerUtil.toCardShortCodes(holeCards));
         } else {
-            return String.format("playerId: %s, chips: %s, best hand: %s", playerId, chips, getBestHand());
+            return String.format("playerId: %s, chips: %s, bet: %s, best hand: %s", playerId, chips, bet, getBestHand());
         }
     }
 
