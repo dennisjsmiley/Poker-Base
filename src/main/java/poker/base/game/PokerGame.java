@@ -4,11 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import poker.base.Card;
 import poker.base.Deck;
-import poker.base.Hand;
-import poker.base.player.DummyPokerPlayer;
 import poker.base.player.PokerPlayer;
 import poker.base.util.PokerUtil;
-import poker.base.util.Tuple;
 
 import java.util.*;
 
@@ -16,66 +13,60 @@ public class PokerGame {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public void runGame() {
-        int numPlayers = 5;
-        Deck deck = new Deck();
-        List<Card> communityCards = new ArrayList<>();
-        Map<Integer, PokerPlayer> pokerPlayers = new HashMap<>();
+    public GameState runGame(GameState state) {
+        Deck deck = state.getDeck();
+        deck.shuffle();
 
-        GameState gameState = GameState
-                .builder()
-                .deck(deck)
-                .pot(0)
-                .startingPlayerChips(100)
-                .communityCards(communityCards)
-                .pokerPlayers(pokerPlayers)
-                .isBigBlindTurn(true)
-                .bigBlind(10)
-                .isLittleBlindTurn(false)
-                .littleBlind(5)
-                .minimumRequiredBet(10)
-                .build();
+        List<Card> communityCards = state.getCommunityCards();
 
-        for (int playerId = 0; playerId < numPlayers; playerId++) {
-            Set<Card> holeCards = new HashSet<>(Arrays.asList(deck.draw(), deck.draw()));
+        state.getPokerPlayers().forEach((playerId, player) -> {
+                player.setHoleCards(new HashSet<>(Arrays.asList(deck.draw(), deck.draw())));
+                logger.info("Player({})", player);
+        });
 
-            PokerPlayer player = new DummyPokerPlayer(playerId, holeCards, gameState.getStartingPlayerChips());
-            pokerPlayers.put(playerId, player);
+        state = state.doBetting();
 
-            logger.info("Player({})", player);
-        }
+        if (state.isOnlyOneActivePlayer()) {
+            List<PokerPlayer> winners = state.getActivePlayers();
+            PokerPlayer winner = winners.get(0);
 
-        gameState = gameState.doBetting();
+            logger.info("winner: {}, winnings: {}", winner, state.getPot());
 
-        if (gameState.isOnlyOneActivePlayer()) {
-            List<PokerPlayer> winners = gameState.getActivePlayers();
-            logger.info("winner: {}, winnings: {}", winners.get(0), gameState.getPot());
-            return;
+            winner.addWinnings(state.getPot());
+            state = state.setFreshState();
+
+            return state;
         }
 
         List<Card> flop = deck.getFlop();
         communityCards.addAll(flop);
         logger.info("flop: {}", PokerUtil.toCardShortCodes(flop));
 
-        gameState = gameState.doBetting();
+        state = state.doBetting();
 
         Card turn = deck.draw();
         communityCards.add(turn);
         logger.info("turn: {}", turn.toShortCode());
 
-        gameState = gameState.doBetting();
+        state = state.doBetting();
 
         Card river = deck.draw();
         communityCards.add(river);
         logger.info("river: {}", river.toShortCode());
 
-        gameState = gameState.doBetting();
+        state = state.doBetting();
 
-        List<PokerPlayer> winners = gameState.getWinners();
+        List<PokerPlayer> winners = state.getWinners();
 
-        int pot = gameState.getPot();
+        int pot = state.getPot();
+        int winningsPerWinner = (int) Math.round(new Double(pot) / new Double(winners.size()));
 
-        logger.info("winners: {}, winnings per player: {}", winners, new Double(pot) / new Double(winners.size()));
+        logger.info("winners: {}, winnings per player: {}", winners, winningsPerWinner);
+
+        winners.forEach(winner -> winner.addWinnings(winningsPerWinner));
+        state = state.setFreshState();
+
+        return state;
     }
 
 

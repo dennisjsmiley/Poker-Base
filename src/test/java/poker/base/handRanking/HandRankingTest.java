@@ -15,42 +15,44 @@ public class HandRankingTest {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Object[][] tieBreakerTestCases = {
-            // Tie Breakers
+            // Tie Breakers -- 0= tie, -1= left hand wins, 1= right hand wins
 
             // Royal Flush
             {"as,ks,qs,js,10s", "ad,kd,qd,jd,10d", 0},
 
             // Straight Flush
-            {"10d,9d,8d,7d,6d", "js,10s,9s,8s,7s", -1},
+            {"10d,9d,8d,7d,6d", "js,10s,9s,8s,7s", 1},
 
             // Four of a Kind
-            {"as,ac,ad,ah,js", "as,ac,ad,ah,ks", -1},
-            {"as,ac,ad,ah,js", "js,jc,jd,jh,ks", 1},
+            {"as,ac,ad,ah,js", "as,ac,ad,ah,ks", 1},
+            {"as,ac,ad,ah,js", "js,jc,jd,jh,ks", -1},
 
             // Full House
-            {"as,ac,ad,ks,qs", "js,jc,jd,ks,qs", 1},
+            {"as,ac,ad,ks,qs", "js,jc,jd,ks,qs", -1},
 
             // Flush
             {"10d,9c,8h,7s,6c", "10h,9s,8s,7h,6d", 0},
-            {"10d,9c,8h,7s,6c", "jh,10s,9s,8h,7d", -1},
+            {"10d,9c,8h,7s,6c", "jh,10s,9s,8h,7d", 1},
 
             // Straight
-            {"6c,5s,4d,3h,2c", "7s,6d,5c,4h,3c", -1},
+            {"6c,5s,4d,3h,2c", "7s,6d,5c,4h,3c", 1},
 
             // Three of a Kind
-            {"as,ac,ah,3d,2c", "ks,kc,kd,4d,3d", 1},
+            {"as,ac,ah,3d,2c", "ks,kc,kd,4d,3d", -1},
 
             // Two Pair
-            {"as,ac,ks,kc,5h", "ks,kc,qs,qh,6h", 1},
-            {"as,ac,ks,kc,5h", "as,ac,ks,kh,6h", -1},
+            {"as,ac,ks,kc,5h", "ks,kc,qs,qh,6h", -1},
+            {"as,ac,ks,kc,5h", "as,ac,ks,kh,6h", 1},
 
             // Pair
-            {"as,ac,kh,qd,js", "kh,kd,qs,jd,10h", 1},
+            {"as,ac,kh,qd,js", "kh,kd,qs,jd,10h", -1},
             {"as,ac,qh,jd,9s", "as,ac,kh,qd,8s", 1},
             {"as,ac,qh,10s,9h", "as,ac,qh,jd,10s", 1},
 
+            {"10h,8d,6s,3h,3d", "jd,9d,6s,3h,3d", 1},
+
             // High Card
-            {"10d,8h,7s,5c,3d", "kd,8h,7s,5c,3d", -1}
+            {"10d,8h,7s,5c,3d", "kd,8h,7s,5c,3d", 1}
 
 
     };
@@ -146,9 +148,9 @@ public class HandRankingTest {
         // adjust result to be 1, 0, or -1
         int result;
         if (rawResult > 0) {
-            result = 1;
-        } else if (rawResult < 0) {
             result = -1;
+        } else if (rawResult < 0) {
+            result = 1;
         } else {
             result = 0;
         }

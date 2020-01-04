@@ -3,9 +3,7 @@ package poker.base;
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
 
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Card implements Comparable<Card> {
     private final Suit suit;
@@ -45,7 +43,8 @@ public class Card implements Comparable<Card> {
 
     @Override
     public String toString() {
-        return rank.toString() + " of " + suit.toString();
+//        return rank.toString() + " of " + suit.toString();
+        return toShortCode();
     }
 
     public static Optional<Card> fromShortCode(String string) {
@@ -61,6 +60,13 @@ public class Card implements Comparable<Card> {
         } else {
             return Optional.empty();
         }
+    }
+
+    public static List<Card> fromShortCodes(String string) {
+        List<String> parts = Arrays.asList(string.split(","));
+        List<Card> cards = new ArrayList<>();
+        parts.forEach(part -> fromShortCode(part).ifPresent(cards::add));
+        return cards;
     }
 
     public String toShortCode() {

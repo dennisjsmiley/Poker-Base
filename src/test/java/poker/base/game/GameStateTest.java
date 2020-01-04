@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
-public class PokerGameTest {
+public class GameStateTest {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -100,7 +100,7 @@ public class PokerGameTest {
         return playerMap;
     }
 
-    public void testGetWinners(PokerGame game, GameState state, List<PokerPlayer> expectedWinners) {
+    public void testGetWinners(GameState state, List<PokerPlayer> expectedWinners) {
         state.getPokerPlayers().forEach((playerId, player) -> player.determineBestHand(state.getCommunityCards()));
 
         List<PokerPlayer> actualWinners = state.getWinners();
@@ -122,8 +122,6 @@ public class PokerGameTest {
 
     @Test
     public void testGetWinners_noTie() {
-        PokerGame game = new PokerGame();
-
         GameState state = GameState
                 .builder()
                 .deck(getTestDeck1())
@@ -138,15 +136,13 @@ public class PokerGameTest {
                 .minimumRequiredBet(minimumRequiredBet)
                 .build();
 
-        testGetWinners(game, state, Arrays.asList(
+        testGetWinners(state, Arrays.asList(
                 state.getPokerPlayers().get(0)
         ));
     }
 
     @Test
     public void testGetWinners_tie() {
-        PokerGame game = new PokerGame();
-
         GameState state = GameState
                 .builder()
                 .deck(getTestDeck2())
@@ -161,8 +157,47 @@ public class PokerGameTest {
                 .minimumRequiredBet(minimumRequiredBet)
                 .build();
 
-        testGetWinners(game, state, Arrays.asList(
+        testGetWinners(state, Arrays.asList(
                 state.getPokerPlayers().get(0),
+                state.getPokerPlayers().get(1)
+        ));
+    }
+
+    private Deck getTestDeck3() {
+        Deck deck = new Deck(Card.fromShortCodes("3d,6s,3h,qd,ah"));
+        return deck;
+    }
+
+    private Map<Integer, PokerPlayer> getTestPokerPlayers3() {
+        List<PokerPlayer> playerList = Arrays.asList(
+                new TestPokerPlayer(0, new HashSet<>(Card.fromShortCodes("10h,8d")), startingPlayerChips),
+
+                new TestPokerPlayer(1, new HashSet<>(Card.fromShortCodes("jd,9d")), startingPlayerChips)
+        );
+
+        Map<Integer, PokerPlayer> playerMap = new HashMap<>();
+        playerList.forEach(player -> playerMap.put(player.getPlayerId(), player));
+
+        return playerMap;
+    }
+
+    @Test
+    public void testGetWinners_Pair() {
+        GameState state = GameState
+                .builder()
+                .deck(getTestDeck3())
+                .pot(pot)
+                .startingPlayerChips(startingPlayerChips)
+                .communityCards(getTestDeck3().getCards().subList(0, 5))
+                .pokerPlayers(getTestPokerPlayers3())
+                .isBigBlindTurn(isBigBlindTurn)
+                .bigBlind(bigBlind)
+                .isLittleBlindTurn(isLittleBlindTurn)
+                .littleBlind(littleBlind)
+                .minimumRequiredBet(minimumRequiredBet)
+                .build();
+
+        testGetWinners(state, Arrays.asList(
                 state.getPokerPlayers().get(1)
         ));
     }

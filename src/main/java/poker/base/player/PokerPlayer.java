@@ -14,7 +14,7 @@ public interface PokerPlayer extends Comparable<PokerPlayer> {
 
     int getChips();
 
-    GameState placeMarginalBet(GameState gameState, int chips);
+    GameState placeMarginalBet(int chips, GameState gameState);
 
     int addWinnings(int chips);
 
@@ -28,6 +28,8 @@ public interface PokerPlayer extends Comparable<PokerPlayer> {
 
     void setIsChecked(boolean isChecked);
 
+    void resetBet();
+
     int getBet();
 
     Hand determineBestHand(List<Card> communityCards);
@@ -36,7 +38,11 @@ public interface PokerPlayer extends Comparable<PokerPlayer> {
 
     int compareTo(PokerPlayer other);
 
+    void setHoleCards(Set<Card> cards);
+
     Set<Card> getHoleCards();
+
+    void clearHand();
 
     String toString();
 }

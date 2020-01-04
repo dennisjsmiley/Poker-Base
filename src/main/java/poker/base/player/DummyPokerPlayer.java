@@ -16,29 +16,14 @@ public class DummyPokerPlayer extends BasePokerPlayer {
     }
 
     @Override
-    public GameState playBettingRound(GameState gameState) {
-        printMessage(String.format("Starting betting round -- pot: %s, player chips: %s, starting total player bet: %s", gameState.getPot(), getChips(), getBet()));
-
-        int bet = 0;
-        if (gameState.isBigBlindTurn()) {
-            bet = gameState.getBigBlind();
-            printMessage("Big blind");
-            gameState = placeMarginalBet(gameState, bet);
-            gameState = gameState.withBigBlindTurn(false);
-            gameState = gameState.withLittleBlindTurn(true);
-        } else if (gameState.isLittleBlindTurn()) {
-            bet = gameState.getLittleBlind();
-            printMessage("Little blind");
-            gameState = placeMarginalBet(gameState, bet);
-            gameState = gameState.withLittleBlindTurn(false);
-        } else if (gameState.getPot() < 60 && gameState.getActivePlayers().size() > 2) {
-            bet = 10;
-            gameState = placeMarginalBet(gameState, bet);
-        } else if (getBet() > 10 && (gameState.getCommunityCards().size() >= 3 || gameState.getCommunityCards().size() == 0)) {
+    public GameState playBettingRoundCustom(GameState state) {
+        if (state.getPot() < 60 && state.getActivePlayers().size() > 2) {
+            state = placeMarginalBet(10, state);
+        } else if (getBet() > 10 && (state.getCommunityCards().size() >= 3 || state.getCommunityCards().size() == 0)) {
             setIsChecked(true);
         } else {
-            gameState = setIsFolded(true, gameState);
+            state = setIsFolded(true, state);
         }
-        return gameState;
+        return state;
     }
 }

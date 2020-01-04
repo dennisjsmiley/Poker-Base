@@ -124,6 +124,9 @@ public class GameState {
         }
 
         Collections.sort(playerHandTuples, (t1, t2) -> t2.getY().compareTo(t1.getY()));
+
+        logger.debug("playerHandTuples: {}", playerHandTuples);
+
         Hand winningHand = playerHandTuples.get(0).getY();
 
         List<PokerPlayer> winners = new ArrayList<>();
@@ -145,5 +148,26 @@ public class GameState {
         });
 
         return winners;
+    }
+
+    public GameState setFreshState() {
+        return setFreshState(this);
+    }
+
+    private GameState setFreshState(GameState state) {
+        state = state.withPot(0);
+        state.getCommunityCards().clear();
+        for (Map.Entry<Integer, PokerPlayer> playerEntry : state.getPokerPlayers().entrySet()) {
+            PokerPlayer player = playerEntry.getValue();
+
+            player.setIsChecked(false);
+            player.setIsFolded(false, state);
+            player.resetBet();
+            player.clearHand();
+        }
+        state = state.withBigBlindTurn(true);
+        state = state.withLittleBlindTurn(true);
+        state = state.withMinimumRequiredBet(state.getBigBlind());
+        return state;
     }
 }

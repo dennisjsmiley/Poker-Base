@@ -1,9 +1,18 @@
 package poker.base;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import poker.base.game.GameState;
 import poker.base.game.PokerGame;
 import poker.base.handRanking.HandRanking;
+import poker.base.player.DummyPokerPlayer;
+import poker.base.player.PokerPlayer;
+
+import java.util.*;
 
 public class ApplicationMain {
+
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationMain.class);
 
     public static void main(String[] args) {
         doGame();
@@ -33,6 +42,33 @@ public class ApplicationMain {
 
     public static void doGame() {
         PokerGame game = new PokerGame();
-        game.runGame();
+
+        int numPlayers = 5;
+        Deck deck = new Deck();
+        List<Card> communityCards = new ArrayList<>();
+        Map<Integer, PokerPlayer> pokerPlayers = new HashMap<>();
+
+        GameState startingState = GameState
+                .builder()
+                .deck(deck)
+                .pot(0)
+                .startingPlayerChips(100)
+                .communityCards(communityCards)
+                .pokerPlayers(pokerPlayers)
+                .isBigBlindTurn(true)
+                .bigBlind(10)
+                .isLittleBlindTurn(false)
+                .littleBlind(5)
+                .minimumRequiredBet(10)
+                .build();
+
+        for (int playerId = 0; playerId < numPlayers; playerId++) {
+            PokerPlayer player = new DummyPokerPlayer(playerId, new HashSet<>(), startingState.getStartingPlayerChips());
+            pokerPlayers.put(playerId, player);
+        }
+
+        GameState nextState = game.runGame(startingState);
+
+        logger.info("nextState: {}", nextState);
     }
 }

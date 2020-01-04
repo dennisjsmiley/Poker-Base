@@ -37,20 +37,26 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     }
 
     @Override
+    public void setHoleCards(Set<Card> cards) {
+        this.holeCards = cards;
+    }
+
+    @Override
     public Set<Card> getHoleCards() {
         return holeCards;
     }
 
     @Override
-    public GameState placeMarginalBet(GameState gameState, int chips) {
+    public GameState placeMarginalBet(int chips, GameState state) {
         assert this.chips > chips;
         bet += chips;
-        gameState = gameState.withPot(gameState.getPot() + chips);
+        state = state.withPot(state.getPot() + chips);
         this.chips -= chips;
+        state = state.withMinimumRequiredBet(bet);
 
         printMessage("Place marginal bet: " + chips + ", total bet: " + bet);
 
-        return gameState;
+        return state;
     }
 
     @Override
@@ -65,7 +71,39 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     }
 
     @Override
-    public abstract GameState playBettingRound(GameState gameState);
+    public GameState playBettingRound(GameState state) {
+        printMessage(String.format("Starting betting round -- pot: %s, player chips: %s, starting total player bet: %s", state.getPot(), getChips(), getBet()));
+
+        if (state.isBigBlindTurn()) {
+            printMessage("Big blind");
+
+            int bigBlind = state.getBigBlind();
+            if (bigBlind > getChips()) {
+                state = setIsFolded(true, state);
+                return state;
+            }
+
+            state = placeMarginalBet(bigBlind, state);
+            state = state.withBigBlindTurn(false);
+            state = state.withLittleBlindTurn(true);
+        } else if (state.isLittleBlindTurn()) {
+            printMessage("Little blind");
+
+            int littleBlind = state.getLittleBlind();
+            if (littleBlind > getChips()) {
+                state = setIsFolded(true, state);
+                return state;
+            }
+
+            state = placeMarginalBet(littleBlind, state);
+            state = state.withLittleBlindTurn(false);
+        } else {
+            state = playBettingRoundCustom(state);
+        }
+        return state;
+    }
+
+    protected abstract GameState playBettingRoundCustom(GameState gameState);
 
     @Override
     public boolean isFolded() {
@@ -99,6 +137,11 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     }
 
     @Override
+    public void resetBet() {
+        bet = 0;
+    }
+
+    @Override
     public int getBet() {
         return bet;
     }
@@ -114,6 +157,11 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     public Hand getBestHand() {
         assert bestHand != null;
         return bestHand;
+    }
+
+    public void clearHand() {
+        holeCards.clear();
+        bestHand = null;
     }
 
     @Override

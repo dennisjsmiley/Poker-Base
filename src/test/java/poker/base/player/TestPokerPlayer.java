@@ -12,7 +12,7 @@ public class TestPokerPlayer extends BasePokerPlayer {
     }
 
     @Override
-    public GameState playBettingRound(GameState gameState) {
+    public GameState playBettingRoundCustom(GameState gameState) {
         throw new UnsupportedOperationException();
     }
 }
