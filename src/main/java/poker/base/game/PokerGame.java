@@ -20,13 +20,15 @@ public class PokerGame {
         int numPlayers = 5;
         Deck deck = new Deck();
         List<Card> communityCards = new ArrayList<>();
+        Map<Integer, PokerPlayer> pokerPlayers = new HashMap<>();
+
         GameState gameState = GameState
                 .builder()
                 .deck(deck)
                 .pot(0)
                 .startingPlayerChips(100)
                 .communityCards(communityCards)
-                .pokerPlayers(new HashMap<>())
+                .pokerPlayers(pokerPlayers)
                 .isBigBlindTurn(true)
                 .bigBlind(10)
                 .isLittleBlindTurn(false)
@@ -34,7 +36,6 @@ public class PokerGame {
                 .minimumRequiredBet(10)
                 .build();
 
-        Map<Integer, PokerPlayer> pokerPlayers = new HashMap<>();
         for (int playerId = 0; playerId < numPlayers; playerId++) {
             Set<Card> holeCards = new HashSet<>();
             holeCards.addAll(Arrays.asList(deck.draw(), deck.draw()));
