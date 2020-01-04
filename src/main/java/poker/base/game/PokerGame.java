@@ -106,7 +106,7 @@ public class PokerGame {
             return Arrays.asList(pokerPlayers.get(playerHandTuples.get(0).getX()));
         }
 
-        Collections.sort(playerHandTuples, (t1, t2) -> - t1.getY().compareTo(t2.getY()));
+        Collections.sort(playerHandTuples, (t1, t2) -> t2.getY().compareTo(t1.getY()));
         Hand winningHand = playerHandTuples.get(0).getY();
 
         List<PokerPlayer> winners = new ArrayList<>();
