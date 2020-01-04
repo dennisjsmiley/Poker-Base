@@ -32,6 +32,8 @@ public class PokerGameTest {
     
     private final int littleBlind = 1;
 
+    private final int minimumRequiredBet = 2;
+
     private Deck getTestDeck1() {
         Deck deck = new Deck(Arrays.asList(
                 new Card(Suit.DIAMONDS, Rank.SIX),
@@ -133,6 +135,7 @@ public class PokerGameTest {
                 .bigBlind(bigBlind)
                 .isLittleBlindTurn(isLittleBlindTurn)
                 .littleBlind(littleBlind)
+                .minimumRequiredBet(minimumRequiredBet)
                 .build();
 
         testGetWinners(game, state, Arrays.asList(
@@ -155,6 +158,7 @@ public class PokerGameTest {
                 .bigBlind(bigBlind)
                 .isLittleBlindTurn(isLittleBlindTurn)
                 .littleBlind(littleBlind)
+                .minimumRequiredBet(minimumRequiredBet)
                 .build();
 
         testGetWinners(game, state, Arrays.asList(

@@ -31,6 +31,7 @@ public class PokerGame {
                 .bigBlind(10)
                 .isLittleBlindTurn(false)
                 .littleBlind(5)
+                .minimumRequiredBet(10)
                 .build();
 
         Map<Integer, PokerPlayer> pokerPlayers = new HashMap<>();
@@ -40,7 +41,7 @@ public class PokerGame {
 
             pokerPlayers.put(playerId, new DummyPokerPlayer(playerId, holeCards, gameState.getStartingPlayerChips()));
 
-            logger.info("playerId: {}, hold cards: {}", playerId, PokerUtil.toCardShortCodes(holeCards));
+            logger.info("playerId: {}, hole cards: {}", playerId, PokerUtil.toCardShortCodes(holeCards));
         }
         gameState = gameState.withPokerPlayers(pokerPlayers);
 
@@ -49,6 +50,8 @@ public class PokerGame {
         for (int playerId = 0; playerId < numPlayers; playerId++) {
             PokerPlayer player = pokerPlayers.get(playerId);
             gameState = player.playBettingRound(gameState);
+
+            logger.info("pot: {}", gameState.getPot());
         }
 
         if (gameState.isOnlyOneActivePlayer()) {
@@ -131,6 +134,8 @@ public class PokerGame {
             for (int playerId = 0; playerId < pokerPlayers.size(); playerId++) {
                 PokerPlayer player = pokerPlayers.get(playerId);
                 gameState = player.playBettingRound(gameState);
+
+                logger.info("pot: {}", gameState.getPot());
             }
         }
         return gameState;
@@ -140,7 +145,7 @@ public class PokerGame {
         int numStillBetting = 0;
         for (Map.Entry<Integer, PokerPlayer> pokerPlayerEntry : pokerPlayers.entrySet()) {
             PokerPlayer player = pokerPlayerEntry.getValue();
-            if (!player.isFolded()) {
+            if (!player.isFolded() && !player.isChecked()) {
                 numStillBetting ++;
             }
         }

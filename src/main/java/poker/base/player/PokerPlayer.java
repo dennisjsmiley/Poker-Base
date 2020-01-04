@@ -22,6 +22,12 @@ public interface PokerPlayer extends Comparable<PokerPlayer> {
 
     boolean isFolded();
 
+    void setIsFolded(boolean isFolded);
+
+    boolean isChecked();
+
+    void setIsChecked(boolean isChecked);
+
     int getBet();
 
     Hand determineBestHand(List<Card> communityCards);

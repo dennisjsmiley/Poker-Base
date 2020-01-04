@@ -18,6 +18,7 @@ public abstract class BasePokerPlayer implements PokerPlayer {
     private int chips;
     private Set<Card> holeCards;
     private boolean isFolded;
+    private boolean isChecked;
     private int bet;
     private Hand bestHand;
 
@@ -26,6 +27,7 @@ public abstract class BasePokerPlayer implements PokerPlayer {
         chips = startingChips;
         this.holeCards = holeCards;
         isFolded = false;
+        isChecked = false;
         bestHand = null;
     }
 
@@ -45,6 +47,9 @@ public abstract class BasePokerPlayer implements PokerPlayer {
         bet += chips;
         gameState = gameState.withPot(gameState.getPot() + chips);
         this.chips -= chips;
+
+        printMessage("Place marginal bet: " + chips + ", total bet: " + bet);
+
         return gameState;
     }
 
@@ -67,8 +72,25 @@ public abstract class BasePokerPlayer implements PokerPlayer {
         return isFolded;
     }
 
-    protected void fold() {
-        isFolded = true;
+    @Override
+    public void setIsFolded(boolean isFolded) {
+        this.isFolded = isFolded;
+        if (isFolded) {
+            printMessage("Fold");
+        }
+    }
+
+    @Override
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    @Override
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
+        if (isChecked) {
+            printMessage("Check");
+        }
     }
 
     @Override

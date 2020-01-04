@@ -34,6 +34,8 @@ public class GameState {
     private final boolean isLittleBlindTurn;
     @Wither
     private final int littleBlind;
+    @Wither
+    private final int minimumRequiredBet;
 
     public List<PokerPlayer> getOtherPokerPlayersList(int targetPlayerId) {
         List<PokerPlayer> pokerPlayersList = new ArrayList<>();
