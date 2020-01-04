@@ -34,7 +34,7 @@ public class DummyPokerPlayer extends BasePokerPlayer {
         } else if (gameState.getPot() < 60 && gameState.getActivePlayers().size() > 2) {
             bet = 10;
             gameState = placeMarginalBet(gameState, bet);
-        } else if (getBet() > 10 && gameState.getCommunityCards().size() >= 3) {
+        } else if (getBet() > 10 && (gameState.getCommunityCards().size() >= 3 || gameState.getCommunityCards().size() == 0)) {
             setIsChecked(true);
         } else {
             gameState = setIsFolded(true, gameState);

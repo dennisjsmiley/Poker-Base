@@ -37,27 +37,19 @@ public class PokerGame {
                 .build();
 
         for (int playerId = 0; playerId < numPlayers; playerId++) {
-            Set<Card> holeCards = new HashSet<>();
-            holeCards.addAll(Arrays.asList(deck.draw(), deck.draw()));
+            Set<Card> holeCards = new HashSet<>(Arrays.asList(deck.draw(), deck.draw()));
 
-            pokerPlayers.put(playerId, new DummyPokerPlayer(playerId, holeCards, gameState.getStartingPlayerChips()));
+            PokerPlayer player = new DummyPokerPlayer(playerId, holeCards, gameState.getStartingPlayerChips());
+            pokerPlayers.put(playerId, player);
 
-            logger.info("playerId: {}, hole cards: {}", playerId, PokerUtil.toCardShortCodes(holeCards));
+            logger.info("Player({})", player);
         }
-        gameState = gameState.withPokerPlayers(pokerPlayers);
 
-        int pot = 0;
-        int bigBlindPlayerId = 0;
-        for (int playerId = 0; playerId < numPlayers; playerId++) {
-            PokerPlayer player = pokerPlayers.get(playerId);
-            gameState = player.playBettingRound(gameState);
-
-            logger.info("pot: {}", gameState.getPot());
-        }
+        gameState = gameState.doBetting();
 
         if (gameState.isOnlyOneActivePlayer()) {
             List<PokerPlayer> winners = gameState.getActivePlayers();
-            logger.info("winner: {}", winners.get(0));
+            logger.info("winner: {}, winnings: {}", winners.get(0), gameState.getPot());
             return;
         }
 
@@ -65,97 +57,30 @@ public class PokerGame {
         communityCards.addAll(flop);
         logger.info("flop: {}", PokerUtil.toCardShortCodes(flop));
 
-        gameState = doBetting(gameState);
+        gameState = gameState.doBetting();
 
         Card turn = deck.draw();
         communityCards.add(turn);
         logger.info("turn: {}", turn.toShortCode());
 
-        gameState = doBetting(gameState);
+        gameState = gameState.doBetting();
 
         Card river = deck.draw();
         communityCards.add(river);
         logger.info("river: {}", river.toShortCode());
 
-        gameState = doBetting(gameState);
+        gameState = gameState.doBetting();
 
-        List<PokerPlayer> winners = getWinners(gameState);
+        List<PokerPlayer> winners = gameState.getWinners();
 
-        for (Map.Entry<Integer, PokerPlayer> playerEntry : pokerPlayers.entrySet()) {
-            PokerPlayer player = playerEntry.getValue();
-            pot += player.getBet();
-        }
+        int pot = gameState.getPot();
 
-        logger.info("winners: {}", winners);
+        logger.info("winners: {}, winnings per player: {}", winners, new Double(pot) / new Double(winners.size()));
     }
 
-    public List<PokerPlayer> getWinners(GameState gameState) {
-        if (!gameState.isActivePlayers()) {
-            return new ArrayList<>();
-        }
 
-        Map<Integer, PokerPlayer> pokerPlayers = gameState.getActivePlayersMap();
-        pokerPlayers.forEach((playerId, player) -> player.determineBestHand(gameState.getCommunityCards()));
 
-        List<Tuple<Integer, Hand>> playerHandTuples = new ArrayList<>();
-        pokerPlayers.forEach((playerId, player) -> {
-            playerHandTuples.add(new Tuple<>(playerId, player.getBestHand()));
-        });
 
-        if (playerHandTuples.size() == 1) {
-            return Arrays.asList(pokerPlayers.get(playerHandTuples.get(0).getX()));
-        }
 
-        Collections.sort(playerHandTuples, (t1, t2) -> t2.getY().compareTo(t1.getY()));
-        Hand winningHand = playerHandTuples.get(0).getY();
-
-        List<PokerPlayer> winners = new ArrayList<>();
-        pokerPlayers.forEach((playerId, player) -> {
-            Hand playerBestHand = player.getBestHand();
-
-            logger.debug("getWinners -- playerId: {}, hand: {} ({}), winning hand: {} ({}), comparison: {}",
-                    playerId,
-                    playerBestHand,
-                    playerBestHand.getHandRanking().asEnum(),
-                    winningHand,
-                    winningHand.getHandRanking().asEnum(),
-                    player.getBestHand().compareTo(winningHand)
-            );
-            
-            if (playerBestHand.compareTo(winningHand) == 0) {
-                winners.add(player);
-            }
-        });
-
-        return winners;
-    }
-
-    public GameState doBetting(GameState gameState) {
-        Map<Integer, PokerPlayer> pokerPlayers = gameState.getActivePlayersMap();
-        while (isStillBetting(pokerPlayers)) {
-            for (int playerId = 0; playerId < pokerPlayers.size(); playerId++) {
-                PokerPlayer player = pokerPlayers.get(playerId);
-                gameState = player.playBettingRound(gameState);
-
-                logger.info("pot: {}", gameState.getPot());
-            }
-            pokerPlayers = gameState.getActivePlayersMap();
-        }
-
-        gameState.getPokerPlayers().forEach((playerId, player) -> player.setIsChecked(false));
-
-        return gameState;
-    }
-
-    public boolean isStillBetting(Map<Integer, PokerPlayer> pokerPlayers) {
-        int numStillBetting = 0;
-        for (Map.Entry<Integer, PokerPlayer> pokerPlayerEntry : pokerPlayers.entrySet()) {
-            PokerPlayer player = pokerPlayerEntry.getValue();
-            if (!player.isFolded() && !player.isChecked()) {
-                numStillBetting ++;
-            }
-        }
-        return numStillBetting > 1;
-    }
 
 }

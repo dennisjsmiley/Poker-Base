@@ -103,7 +103,7 @@ public class PokerGameTest {
     public void testGetWinners(PokerGame game, GameState state, List<PokerPlayer> expectedWinners) {
         state.getPokerPlayers().forEach((playerId, player) -> player.determineBestHand(state.getCommunityCards()));
 
-        List<PokerPlayer> actualWinners = game.getWinners(state);
+        List<PokerPlayer> actualWinners = state.getWinners();
 
         List<Hand> winningHands = new ArrayList<>();
         actualWinners.forEach(player -> winningHands.add(player.getBestHand()));
