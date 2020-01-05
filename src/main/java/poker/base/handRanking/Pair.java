@@ -3,14 +3,16 @@ package poker.base.handRanking;
 import poker.base.Hand;
 import poker.base.enums.Rank;
 
+import java.util.Optional;
+
 public class Pair extends HandRanking {
 
     public Pair(Hand hand) {
         super(hand);
     }
 
-    public Rank getRank() {
-        return getHand().getTwoOfAKindRank().get(0);
+    public Optional<Rank> getRank() {
+        return Optional.of(getHand().getTwoOfAKindRank().get(0));
     }
 
     @Override

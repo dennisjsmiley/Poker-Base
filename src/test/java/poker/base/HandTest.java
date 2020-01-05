@@ -123,7 +123,7 @@ public class HandTest {
         assertTrue(handRanking instanceof FourOfAKind);
 
         FourOfAKind fourOfAKind = (FourOfAKind) handRanking;
-        assertEquals(Rank.JACK, fourOfAKind.getRank());
+        assertEquals(Rank.JACK, fourOfAKind.getRank().get());
 
         logger.debug("Four of a Kind (Jack): '{}'", fourOfAKind);
     }
@@ -243,7 +243,7 @@ public class HandTest {
         assertTrue(handRanking instanceof ThreeOfAKind);
 
         ThreeOfAKind threeOfAKind = (ThreeOfAKind) handRanking;
-        assertEquals(Rank.ACE, threeOfAKind.getRank());
+        assertEquals(Rank.ACE, threeOfAKind.getRank().get());
 
         logger.debug("Three of a Kind (Ace): '{}'", threeOfAKind);
     }
@@ -305,7 +305,7 @@ public class HandTest {
         assertTrue(handRanking instanceof Pair);
 
         Pair pair = (Pair) handRanking;
-        assertEquals(Rank.ACE, pair.getRank());
+        assertEquals(Rank.ACE, pair.getRank().get());
 
         logger.debug("Pair (Ace): '{}'", pair);
     }
@@ -327,7 +327,7 @@ public class HandTest {
         assertTrue(handRanking instanceof HighCard);
 
         HighCard highCard = (HighCard) handRanking;
-        assertEquals(Rank.ACE, highCard.getRank());
+        assertEquals(Rank.ACE, highCard.getRank().get());
 
         logger.debug("High Card (Ace): '{}'", highCard);
     }

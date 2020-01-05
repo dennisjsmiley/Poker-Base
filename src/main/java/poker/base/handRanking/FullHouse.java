@@ -3,6 +3,8 @@ package poker.base.handRanking;
 import poker.base.Hand;
 import poker.base.enums.Rank;
 
+import java.util.Optional;
+
 public class FullHouse extends HandRanking {
 
     public FullHouse(Hand hand) {
@@ -15,6 +17,11 @@ public class FullHouse extends HandRanking {
 
     public Rank getTwoOfAKindRank() {
         return getHand().getTwoOfAKindRank().get(0);
+    }
+
+    @Override
+    public Optional<Rank> getRank() {
+        return Optional.empty();
     }
 
     @Override

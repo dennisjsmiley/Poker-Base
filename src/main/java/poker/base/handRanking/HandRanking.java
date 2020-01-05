@@ -8,6 +8,7 @@ import poker.base.enums.Rank;
 import poker.base.util.PokerUtil;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class HandRanking implements Comparable<HandRanking> {
@@ -24,6 +25,8 @@ public abstract class HandRanking implements Comparable<HandRanking> {
     }
 
     public abstract poker.base.enums.HandRanking asEnum();
+
+    public abstract Optional<Rank> getRank();
 
     @Override
     public int compareTo(HandRanking other) {
@@ -84,7 +87,7 @@ public abstract class HandRanking implements Comparable<HandRanking> {
     }
 
     int handleFourOfAKindTie(FourOfAKind self, FourOfAKind other) {
-        int result = self.getRank().compareTo(other.getRank());
+        int result = self.getRank().get().compareTo(other.getRank().get());
         if (result == 0) {
             Rank selfKickerRank = self.getHand().getXOfAKindRank(1).get(0);
             Rank otherKickerRank = other.getHand().getXOfAKindRank(1).get(0);
@@ -106,7 +109,12 @@ public abstract class HandRanking implements Comparable<HandRanking> {
     }
 
     int handleThreeOfAKindTie(ThreeOfAKind self, ThreeOfAKind other) {
-        return self.getRank().compareTo(other.getRank());
+        int result = self.getRank().get().compareTo(other.getRank().get());
+        if (result != 0) {
+            return result;
+        }
+
+        return compareKickerCards(self, other);
     }
 
     int handleTwoPairTie(TwoPair self, TwoPair other) {
@@ -126,17 +134,13 @@ public abstract class HandRanking implements Comparable<HandRanking> {
         return selfKickerRank.compareTo(otherKickerRank);
     }
 
-    int handlePairTie(Pair self, Pair other) {
-        int result = self.getRank().compareTo(other.getRank());
-        if (result != 0) {
-            return result;
-        }
-
+    int compareKickerCards(HandRanking self, HandRanking other) {
+        int result;
         List<Card> selfKickerCards = self
                 .getHand()
                 .getCards()
                 .stream()
-                .filter(card -> card.getRank() != self.getRank())
+                .filter(card -> card.getRank() != self.getRank().get())
                 .collect(Collectors.toList());
         selfKickerCards.sort((card1, card2) -> card2.compareTo(card1));
 
@@ -144,19 +148,28 @@ public abstract class HandRanking implements Comparable<HandRanking> {
                 .getHand()
                 .getCards()
                 .stream()
-                .filter(card -> card.getRank() != other.getRank())
+                .filter(card -> card.getRank() != other.getRank().get())
                 .collect(Collectors.toList());
         otherKickerCards.sort((card1, card2) -> card2.compareTo(card1));
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < selfKickerCards.size(); i++) {
             result = selfKickerCards.get(i).compareTo(otherKickerCards.get(i));
             if (result != 0) {
                 return result;
             }
         }
 
-        result = 0; // hands are the same 
+        result = 0; // hands are the same
         return result;
+    }
+
+    int handlePairTie(Pair self, Pair other) {
+        int result = self.getRank().get().compareTo(other.getRank().get());
+        if (result != 0) {
+            return result;
+        }
+
+        return compareKickerCards(self, other);
     }
 
     int handleHighCardTie(HighCard self, HighCard other) {

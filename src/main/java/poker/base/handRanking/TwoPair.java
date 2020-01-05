@@ -3,10 +3,7 @@ package poker.base.handRanking;
 import poker.base.Hand;
 import poker.base.enums.Rank;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TwoPair extends HandRanking {
 
@@ -24,6 +21,11 @@ public class TwoPair extends HandRanking {
         List<Rank> ranks = getHand().getTwoOfAKindRank();
         ranks.sort((rank1, rank2) -> rank2.compareTo(rank1));
         return Collections.unmodifiableList(ranks);
+    }
+
+    @Override
+    public Optional<Rank> getRank() {
+        return Optional.empty();
     }
 
     @Override

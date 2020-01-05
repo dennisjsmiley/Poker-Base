@@ -201,4 +201,44 @@ public class GameStateTest {
                 state.getPokerPlayers().get(1)
         ));
     }
+
+    private Deck getTestDeck4() {
+        Deck deck = new Deck(Card.fromShortCodes("3d,6s,2h,2c,2d"));
+        return deck;
+    }
+
+    private Map<Integer, PokerPlayer> getTestPokerPlayers4() {
+        List<PokerPlayer> playerList = Arrays.asList(
+                new TestPokerPlayer(0, new HashSet<>(Card.fromShortCodes("10h,5s")), startingPlayerChips),
+
+                new TestPokerPlayer(1, new HashSet<>(Card.fromShortCodes("kc,js")), startingPlayerChips)
+        );
+
+        Map<Integer, PokerPlayer> playerMap = new HashMap<>();
+        playerList.forEach(player -> playerMap.put(player.getPlayerId(), player));
+
+        return playerMap;
+    }
+
+    @Test
+    public void testGetWinners_ThreeOfAKind_Kicker() {
+        GameState state = GameState
+                .builder()
+                .deck(getTestDeck4())
+                .pot(pot)
+                .startingPlayerChips(startingPlayerChips)
+                .communityCards(getTestDeck4().getCards().subList(0, 5))
+                .pokerPlayers(getTestPokerPlayers4())
+                .isBigBlindTurn(isBigBlindTurn)
+                .bigBlind(bigBlind)
+                .isLittleBlindTurn(isLittleBlindTurn)
+                .littleBlind(littleBlind)
+                .minimumRequiredBet(minimumRequiredBet)
+                .build();
+
+        testGetWinners(state, Arrays.asList(
+                state.getPokerPlayers().get(1)
+        ));
+    }
+
 }

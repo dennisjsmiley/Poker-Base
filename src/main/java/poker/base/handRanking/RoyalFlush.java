@@ -1,7 +1,10 @@
 package poker.base.handRanking;
 
 import poker.base.Hand;
+import poker.base.enums.Rank;
 import poker.base.enums.Suit;
+
+import java.util.Optional;
 
 public class RoyalFlush extends HandRanking {
 
@@ -11,6 +14,11 @@ public class RoyalFlush extends HandRanking {
 
     public Suit getSuit() {
         return getHand().getSingleSuit().get();
+    }
+
+    @Override
+    public Optional<Rank> getRank() {
+        return Optional.empty();
     }
 
     @Override
