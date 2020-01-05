@@ -3,6 +3,7 @@ package poker.base;
 import poker.base.enums.Rank;
 import poker.base.enums.Suit;
 import poker.base.handRanking.*;
+import poker.base.util.PokerUtil;
 
 import java.util.*;
 
@@ -265,10 +266,11 @@ public class Hand implements Comparable<Hand> {
 
     public static List<Hand> getHands(Set<Card> holeCards, List<Card> communityCards) {
         List<Hand> hands = new ArrayList<>();
-        for (int offset = 0; offset < 3; offset++) {
+        Set<Set<Card>> threeCardCombos = PokerUtil.computeThreeCardCombinations(communityCards);
+        for (Set<Card> threeCardCombo : threeCardCombos) {
             Set<Card> cards = new HashSet<>();
             cards.addAll(holeCards);
-            cards.addAll(communityCards.subList(offset, offset + 3));
+            cards.addAll(threeCardCombo);
 
             Hand hand = new Hand(cards);
             hands.add(hand);

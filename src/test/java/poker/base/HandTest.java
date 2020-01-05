@@ -364,11 +364,23 @@ public class HandTest {
                 new Card(Suit.DIAMONDS, Rank.QUEEN)
         ));
 
-        List<Hand> expectedHands = Arrays.asList(
-                Hand.fromShortCodes("as,ad,qd,qc,7h"),
-                Hand.fromShortCodes("as,ad,qd,qc,4h"),
-                Hand.fromShortCodes("as,qd,qc,10s,4h")
-        );
+        String[] expectedHandShortCodes = {
+                "as,ad,qd,qc,10s",
+                "as,ad,qd,qc,7h",
+                "as,ad,qd,qc,4h",
+                "as,ad,qd,10s,7h",
+                "as,ad,qd,10s,4h",
+                "as,ad,qd,7h,4h",
+                "as,qd,qc,10s,7h",
+                "as,qd,qc,10s,4h",
+                "as,qd,qc,7h,4h",
+                "as,qd,10s,7h,4h"
+        };
+
+        List<Hand> expectedHands = new ArrayList<>();
+        for (String shortCode : expectedHandShortCodes) {
+            expectedHands.add(Hand.fromShortCodes(shortCode));
+        }
 
         List<Hand> actualHands = Hand.getHands(holdCards, communityCards);
 
