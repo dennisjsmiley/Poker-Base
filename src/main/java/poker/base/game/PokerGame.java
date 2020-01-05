@@ -56,6 +56,8 @@ public class PokerGame {
 
         state = state.doBetting();
 
+        logger.info("community cards: {}", PokerUtil.toCardShortCodes(communityCards));
+
         List<PokerPlayer> winners = state.getWinners();
 
         int pot = state.getPot();

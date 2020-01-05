@@ -175,7 +175,7 @@ public abstract class BasePokerPlayer implements PokerPlayer {
         if (getBestHand() == null) {
             return String.format("playerId: %s, chips: %s, bet: %s, hole cards: %s", playerId, chips, bet, PokerUtil.toCardShortCodes(holeCards));
         } else {
-            return String.format("playerId: %s, chips: %s, bet: %s, best hand: %s", playerId, chips, bet, getBestHand());
+            return String.format("playerId: %s, chips: %s, bet: %s, best hand: %s, hole cards: %s", playerId, chips, bet, getBestHand(), holeCards);
         }
     }
 
